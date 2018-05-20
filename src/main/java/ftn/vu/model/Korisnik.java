@@ -1,6 +1,6 @@
 package ftn.vu.model;
 
-public class Korisnik {
+public abstract class Korisnik {
 
 	protected long id;
 	protected String ime;

@@ -1,7 +1,5 @@
 package ftn.vu.ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,16 +17,17 @@ public class Login {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
 				try {
 					Login window = new Login();
 					window.loginFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
-		});
+            }
+        });
 	}
 
 	/**

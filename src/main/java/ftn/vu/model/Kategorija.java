@@ -1,0 +1,14 @@
+package ftn.vu.model;
+
+public enum Kategorija {
+	
+	DOMACAKUHINJA,
+	ROSTILJ,
+	KINESKIRESTORAN,
+	INDIJSKIRESTORAN,
+	POSLASTICARNICA,
+	PICERIJA
+	
+
+
+}

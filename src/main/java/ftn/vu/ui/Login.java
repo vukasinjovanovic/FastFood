@@ -18,16 +18,9 @@ public class Login {
 	 */
 	public static void main(String[] args) {
 		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-				try {
-					Login window = new Login();
-					window.loginJFrame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-            }
-        });
+		Login loginProzor = new Login();
+		loginProzor.loginJFrame.setVisible(true);
+		
 	}
 
 	/**

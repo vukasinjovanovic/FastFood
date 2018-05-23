@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 
 public class Login {
 
-	private JFrame loginFrame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JFrame loginJFrame;
+	private JTextField korisnickoImeTekstPolje;
+	private JTextField lozinkaTekstPolje;
 
 	/**
 	 * Launch the application.
@@ -22,7 +22,7 @@ public class Login {
             public void run() {
 				try {
 					Login window = new Login();
-					window.loginFrame.setVisible(true);
+					window.loginJFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,59 +41,59 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		loginFrame = new JFrame();
-		loginFrame.setAutoRequestFocus(false);
-		loginFrame.setBounds(100, 100, 408, 154);
-		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		loginFrame.getContentPane().setLayout(null);
+		loginJFrame = new JFrame();
+		loginJFrame.setAutoRequestFocus(false);
+		loginJFrame.setBounds(100, 100, 408, 154);
+		loginJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		loginJFrame.getContentPane().setLayout(null);
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
 		lblKorisnickoIme.setBounds(10, 11, 108, 14);
-		loginFrame.getContentPane().add(lblKorisnickoIme);
+		loginJFrame.getContentPane().add(lblKorisnickoIme);
 		
 		JLabel lblLozinka = new JLabel("Lozinka:");
 		lblLozinka.setBounds(10, 36, 108, 14);
-		loginFrame.getContentPane().add(lblLozinka);
+		loginJFrame.getContentPane().add(lblLozinka);
 		
-		textField = new JTextField();
-		textField.setBounds(128, 8, 225, 20);
-		loginFrame.getContentPane().add(textField);
-		textField.setColumns(10);
+		korisnickoImeTekstPolje = new JTextField();
+		korisnickoImeTekstPolje.setBounds(128, 8, 225, 20);
+		loginJFrame.getContentPane().add(korisnickoImeTekstPolje);
+		korisnickoImeTekstPolje.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(128, 33, 225, 20);
-		loginFrame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		lozinkaTekstPolje = new JTextField();
+		lozinkaTekstPolje.setBounds(128, 33, 225, 20);
+		loginJFrame.getContentPane().add(lozinkaTekstPolje);
+		lozinkaTekstPolje.setColumns(10);
 		
-		JButton btnNewButton_1 = new JButton("Odustani");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton odustaniDugme = new JButton("Odustani");
+		odustaniDugme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// akcija na klik: Odustani
 				
 				// ciste se teks polja
-				textField.setText("");
-				textField_1.setText("");
+				korisnickoImeTekstPolje.setText("");
+				lozinkaTekstPolje.setText("");
 				
 				// zatvara se forma i sam program
-				loginFrame.dispose();
+				loginJFrame.dispose();
 			}
 		});
-		btnNewButton_1.setBounds(227, 64, 89, 23);
-		loginFrame.getContentPane().add(btnNewButton_1);
+		odustaniDugme.setBounds(227, 64, 89, 23);
+		loginJFrame.getContentPane().add(odustaniDugme);
 		
-		JButton btnNewButton = new JButton("Prijavi se");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton prijaviSeDugme = new JButton("Prijavi se");
+		prijaviSeDugme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				// TODO: dodati proveru unetih kredencijala
 				
 				// kad je uspesno logovanje, otvara se glavni ekran
-				GlavniEkran gFrame = new GlavniEkran();
-				gFrame.setVisible(true);
-				loginFrame.dispose();
+				GlavniEkran glavniEkran = new GlavniEkran();
+				glavniEkran.setVisible(true);
+				loginJFrame.dispose();
 			}
 		});
-		btnNewButton.setBounds(128, 64, 89, 23);
-		loginFrame.getContentPane().add(btnNewButton);
+		prijaviSeDugme.setBounds(128, 64, 89, 23);
+		loginJFrame.getContentPane().add(prijaviSeDugme);
 	}
 }

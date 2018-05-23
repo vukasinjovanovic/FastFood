@@ -1,6 +1,6 @@
 package ftn.vu.model;
 
-public class Restorani {
+public class Restoran {
 	
 	private String naziv;
 	private String adresa;

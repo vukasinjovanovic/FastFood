@@ -2,19 +2,18 @@ package ftn.vu.model;
 
 public class Administrator extends Korisnik {
 	
-	private int jmbg;
+	private long jmbg;
 	
 	private double plata;
 	
 	public Administrator() {
-		this.prezime = "";
 	}
 
-	public int getJmbg() {
+	public long getJmbg() {
 		return jmbg;
 	}
 
-	public void setJmbg(int jmbg) {
+	public void setJmbg(long jmbg) {
 		this.jmbg = jmbg;
 	}
 

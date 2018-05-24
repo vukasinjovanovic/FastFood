@@ -7,7 +7,6 @@ public class Administrator extends Korisnik {
 	private double plata;
 	
 	public Administrator() {
-		this.prezime = "";
 	}
 
 	public int getJmbg() {

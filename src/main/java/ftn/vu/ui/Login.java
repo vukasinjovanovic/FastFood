@@ -34,11 +34,11 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		loginJFrame = new JFrame();
-		loginJFrame.setAutoRequestFocus(false);
-		loginJFrame.setBounds(100, 100, 408, 154);
-		loginJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		loginJFrame.getContentPane().setLayout(null);
+		loginJFrame = new JFrame(); // novi objekat tipa JFrame
+		loginJFrame.setBounds(100, 100, 408, 154); // dimenzije
+		loginJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // prekini rad programa kad se svi prozori zatvore
+		loginJFrame.setLocationRelativeTo(null); // prikazi formu na centru ekrana
+		loginJFrame.getContentPane().setLayout(null); // koristi apsolutno pozicioniranje (pixel po pixel)
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
 		lblKorisnickoIme.setBounds(10, 11, 108, 14);
@@ -61,6 +61,7 @@ public class Login {
 		JButton odustaniDugme = new JButton("Odustani");
 		odustaniDugme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Kliknuto na odustani!");
 				// akcija na klik: Odustani
 				
 				// ciste se teks polja
@@ -77,6 +78,7 @@ public class Login {
 		JButton prijaviSeDugme = new JButton("Prijavi se");
 		prijaviSeDugme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Kliknuto na prijavi se!");
 				
 				// TODO: dodati proveru unetih kredencijala
 				

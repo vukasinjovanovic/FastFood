@@ -6,6 +6,10 @@ public class Dostavljac extends Korisnik {
 	
 	private double plata;
 	
+	private TipVozila tipVozila;
+	
+	private String registarskaOznakaVozila;
+	
 	public int getJmbg() {
 		return jmbg;
 	}
@@ -22,9 +26,6 @@ public class Dostavljac extends Korisnik {
 		this.plata = plata;
 	}
 
-	
-	private TipVozila tipVozila;
-
 	public TipVozila getTipVozila() {
 		return tipVozila;
 	}
@@ -32,8 +33,6 @@ public class Dostavljac extends Korisnik {
 	public void setTipVozila(TipVozila tipVozila) {
 		this.tipVozila = tipVozila;
 	}
-	
-	private String registarskaOznakaVozila;
 	
 	public String getRegistarskaOznakaVozila () {
 		return registarskaOznakaVozila;

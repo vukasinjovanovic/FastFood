@@ -4,4 +4,13 @@
   <artifactId>ftn.vu</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Fast Food</name>
+  
+  <build>
+   <resources>
+     <resource>
+       <directory>src/main/resources</directory>
+     </resource>
+   </resources>
+ </build>
+  
 </project>

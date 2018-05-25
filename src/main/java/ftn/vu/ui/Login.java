@@ -3,41 +3,46 @@ package ftn.vu.ui;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ftn.vu.fajl.RadSaFajlom;
+import ftn.vu.izvor.podataka.IzvorPodataka;
+import ftn.vu.model.Administrator;
+import ftn.vu.model.Dostavljac;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Login {
 
 	private JFrame loginJFrame;
 	private JTextField korisnickoImeTekstPolje;
 	private JTextField lozinkaTekstPolje;
+	private JLabel porukaLabela;
+	
+	private IzvorPodataka izvorPodataka;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		
+		RadSaFajlom radSaFajlom = new RadSaFajlom();
 		
 		Login loginProzor = new Login();
+		loginProzor.izvorPodataka = radSaFajlom.citajFajlove();
 		loginProzor.loginJFrame.setVisible(true);
 		
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public Login() {
-		initialize();
+		inicijalizuj();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	private void inicijalizuj() {
 		loginJFrame = new JFrame(); // novi objekat tipa JFrame
-		loginJFrame.setBounds(100, 100, 408, 154); // dimenzije
+		loginJFrame.setBounds(100, 100, 408, 180); // dimenzije
 		loginJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // prekini rad programa kad se svi prozori zatvore
-		loginJFrame.setLocationRelativeTo(null); // prikazi formu na centru ekrana
+    loginJFrame.setLocationRelativeTo(null); // prikazi formu na centru ekrana
 		loginJFrame.getContentPane().setLayout(null); // koristi apsolutno pozicioniranje (pixel po pixel)
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
@@ -72,7 +77,7 @@ public class Login {
 				loginJFrame.dispose();
 			}
 		});
-		odustaniDugme.setBounds(227, 64, 89, 23);
+		odustaniDugme.setBounds(225, 92, 89, 23);
 		loginJFrame.getContentPane().add(odustaniDugme);
 		
 		JButton prijaviSeDugme = new JButton("Prijavi se");
@@ -80,15 +85,44 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Kliknuto na prijavi se!");
 				
-				// TODO: dodati proveru unetih kredencijala
+				Administrator administrator = izvorPodataka.pronadjiAdmina(korisnickoImeTekstPolje.getText(), lozinkaTekstPolje.getText());
 				
-				// kad je uspesno logovanje, otvara se glavni ekran
-				GlavniEkran glavniEkran = new GlavniEkran();
-				glavniEkran.setVisible(true);
-				loginJFrame.dispose();
+				if(administrator != null) {
+					// kad je uspesno logovanje, otvara se glavni ekran
+					GlavniEkran glavniEkran = new GlavniEkran();
+					glavniEkran.setVisible(true);
+					glavniEkran.setAdministrator(administrator);
+					glavniEkran.setIzvorPodataka(izvorPodataka);
+					glavniEkran.pripremiZaAdmina();
+					loginJFrame.dispose();
+					return;
+				}
+				
+				Dostavljac dostavljac = izvorPodataka.pronadjiDostavljaca(korisnickoImeTekstPolje.getText(), lozinkaTekstPolje.getText());
+				
+				if(dostavljac != null) {
+					GlavniEkran glavniEkran = new GlavniEkran();
+					glavniEkran.setVisible(true);
+					glavniEkran.setDostavljac(dostavljac);
+					glavniEkran.setIzvorPodataka(izvorPodataka);
+					glavniEkran.pripremiZaDostavljaca();
+					loginJFrame.dispose();
+					return;
+				}
+				
+				if(administrator == null) {
+					porukaLabela.setVisible(true);
+				}
+
 			}
 		});
-		prijaviSeDugme.setBounds(128, 64, 89, 23);
+		prijaviSeDugme.setBounds(128, 92, 89, 23);
 		loginJFrame.getContentPane().add(prijaviSeDugme);
+		
+		porukaLabela = new JLabel("Neuspesno logovanje!");
+		porukaLabela.setForeground(Color.RED);
+		porukaLabela.setBounds(128, 64, 225, 14);
+		porukaLabela.setVisible(false);
+		loginJFrame.getContentPane().add(porukaLabela);
 	}
 }

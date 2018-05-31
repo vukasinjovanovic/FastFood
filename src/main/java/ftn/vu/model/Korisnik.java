@@ -1,21 +1,12 @@
 package ftn.vu.model;
 
-public abstract class Korisnik {
+public abstract class Korisnik extends Identifikator {
 
-	protected long id;
 	protected String ime;
 	protected String prezime;
 	protected String pol;
 	protected String korisnickoIme;
 	protected String lozinka;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getIme() {
 		return ime;

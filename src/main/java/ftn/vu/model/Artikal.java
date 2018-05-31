@@ -1,6 +1,6 @@
 package ftn.vu.model;
 
-public abstract class Artikal {
+public abstract class Artikal extends Identifikator {
 	
 	private String naziv;
 	private double cena;

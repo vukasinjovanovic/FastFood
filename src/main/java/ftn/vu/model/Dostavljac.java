@@ -10,7 +10,7 @@ public class Dostavljac extends Korisnik {
 	
 	private String registarskaOznakaVozila;
 	
-	public int getJmbg() {
+	public long getJmbg() {
 		return jmbg;
 	}
 

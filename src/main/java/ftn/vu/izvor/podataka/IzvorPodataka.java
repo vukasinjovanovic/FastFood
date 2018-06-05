@@ -12,6 +12,8 @@ public class IzvorPodataka {
 	
 	private List<Dostavljac> dostavljaci = new ArrayList<Dostavljac>();
 
+	private long maxId;
+
 	public IzvorPodataka() {
 	}
 
@@ -47,6 +49,15 @@ public class IzvorPodataka {
 			}
 		}
 		return null;
+	}
+
+	public long dajSledeciId() {
+		maxId = maxId + 1;
+		return maxId;
+	}
+
+	public void setMaxId(long maxId) {
+		this.maxId = maxId;
 	}
 	
 	

@@ -23,6 +23,7 @@ public class RadSaFajlom {
 	public static final String DOSTAVLJAC_FAJL = "src/main/resources/dostavljac.txt";
 	
 	
+	long maxId = 0;
 	
 	public RadSaFajlom() {
 	}
@@ -43,6 +44,8 @@ public class RadSaFajlom {
 	    List<Dostavljac> dostavljaci = parsirajDostavljace(linijeDostavljac);
 	    
 	    izvorPodataka.setDostavljaci(dostavljaci);
+	    
+	    izvorPodataka.setMaxId(this.maxId);
 	    
 		return izvorPodataka;
 	}
@@ -123,6 +126,8 @@ public class RadSaFajlom {
 			administrator.setJmbg(Long.parseLong(polja[6]));
 			administrator.setPlata(Double.parseDouble(polja[7]));
 			
+			postaviMaxId(administrator.getId());
+			
 			admini.add(administrator);
 		}
 		
@@ -130,6 +135,12 @@ public class RadSaFajlom {
 	}
 	
 	
+	private void postaviMaxId(long id) {
+		if(id > maxId) {
+			maxId = id;
+		}
+	}
+
 	private List<Dostavljac> parsirajDostavljace(List<String> linijeDostavljac) {
 		List<Dostavljac> dostavljaci = new ArrayList<Dostavljac>();
 		
@@ -147,6 +158,8 @@ public class RadSaFajlom {
 			
 			dostavljac.setTipVozila(TipVozila.valueOf(polja[8]));
 			dostavljac.setRegistarskaOznakaVozila(polja[9]);
+			
+			postaviMaxId(dostavljac.getId());
 			
 			dostavljaci.add(dostavljac);
 		}

@@ -55,12 +55,25 @@ public class GlavniEkran extends JFrame {
 		btnDodajDostavljaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
+				nke.dodavanjeDostavljaca();
 				nke.setVisible(true);
 			}
 		});
 		
 		btnDodajDostavljaca.setBounds(10, 29, 147, 23);
 		getContentPane().add(btnDodajDostavljaca);
+		
+		JButton dodajKupcaBtn = new JButton("Dodaj kupca");
+		dodajKupcaBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
+				nke.dodavanjeKupca();
+				nke.setVisible(true);
+				
+			}
+		});
+		dodajKupcaBtn.setBounds(10, 63, 147, 23);
+		getContentPane().add(dodajKupcaBtn);
 		
 	}
 

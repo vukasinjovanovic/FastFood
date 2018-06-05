@@ -4,13 +4,17 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import ftn.vu.izvor.podataka.IzvorPodataka;
+import ftn.vu.model.Dostavljac;
 import ftn.vu.model.Pol;
 import ftn.vu.model.TipVozila;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NoviKorisnikEkran extends JDialog {
 	private JTextField imeTextField;
@@ -20,18 +24,37 @@ public class NoviKorisnikEkran extends JDialog {
 	private JTextField jmbgTextField;
 	private JTextField plataTextField;
 	private JTextField regOznakaTextField;
+	private JComboBox polComboBox;
+	private JComboBox tipVozilacomboBox;
+	private JLabel lblTipVozila;
+	private JLabel lblRegOznaka;
+	
+	private boolean dodavanjeDostavljaca; 
+	
+	private IzvorPodataka izvorPodataka;
 
 	public NoviKorisnikEkran(IzvorPodataka izvorPodataka) {
+		this.izvorPodataka = izvorPodataka;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
 		JButton btnSacuvaj = new JButton("Sacuvaj");
+		btnSacuvaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sacuvaj();
+			}
+		});
 		btnSacuvaj.setBounds(10, 228, 89, 23);
 		getContentPane().add(btnSacuvaj);
 		
 		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				zatvori();
+			}
+		});
 		btnOdustani.setBounds(108, 228, 89, 23);
 		getContentPane().add(btnOdustani);
 		
@@ -63,11 +86,11 @@ public class NoviKorisnikEkran extends JDialog {
 		lblPlata.setBounds(10, 156, 100, 14);
 		getContentPane().add(lblPlata);
 		
-		JLabel lblTipVozila = new JLabel("Tip vozila:");
+		lblTipVozila = new JLabel("Tip vozila:");
 		lblTipVozila.setBounds(10, 181, 100, 14);
 		getContentPane().add(lblTipVozila);
 		
-		JLabel lblRegOznaka = new JLabel("Reg, oznaka");
+		lblRegOznaka = new JLabel("Reg, oznaka");
 		lblRegOznaka.setBounds(10, 206, 100, 14);
 		getContentPane().add(lblRegOznaka);
 		
@@ -106,13 +129,13 @@ public class NoviKorisnikEkran extends JDialog {
 		getContentPane().add(regOznakaTextField);
 		regOznakaTextField.setColumns(10);
 		
-		JComboBox polComboBox = new JComboBox();
+		polComboBox = new JComboBox();
 		polComboBox.setBounds(108, 56, 173, 20);
 		polComboBox.addItem(Pol.MUSKI);
 		polComboBox.addItem(Pol.ZENSKI);
 		getContentPane().add(polComboBox);
 		
-		JComboBox tipVozilacomboBox = new JComboBox();
+		tipVozilacomboBox = new JComboBox();
 		tipVozilacomboBox.setBounds(108, 178, 173, 20);
 		tipVozilacomboBox.addItem(TipVozila.AUTOMOBIL);
 		tipVozilacomboBox.addItem(TipVozila.BICIKL);
@@ -121,5 +144,98 @@ public class NoviKorisnikEkran extends JDialog {
 		getContentPane().add(tipVozilacomboBox);
 		setModal(true);
 		
+	}
+	
+	private void zatvori() {
+		this.dispose();
+	}
+	
+	private void sacuvaj() {
+		boolean rezultat = false;
+		
+		if(dodavanjeDostavljaca) {
+			rezultat = sacuvajDostavljaca();
+		} else {
+			rezultat = sacuvajKupca();
+		}
+		
+		if(rezultat) {
+			// ako je cuvanje uspesno, zatvori ovaj prozor
+			this.dispose();	
+		}
+		
+	}
+
+
+	private boolean sacuvajDostavljaca() {
+		Dostavljac dostavljac = new Dostavljac();
+		dostavljac.setId(izvorPodataka.dajSledeciId());
+		dostavljac.setIme(imeTextField.getText());
+		try {
+			dostavljac.setJmbg(Long.parseLong(jmbgTextField.getText()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		dostavljac.setKorisnickoIme(korsnickoImeTextField.getText());
+		dostavljac.setLozinka(lozinkaTextField.getText());
+		try {
+			dostavljac.setPlata(Double.parseDouble(plataTextField.getText()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		dostavljac.setPol(Pol.valueOf(polComboBox.getSelectedItem().toString()));
+		dostavljac.setPrezime(prezimeTextField.getText());
+		dostavljac.setRegistarskaOznakaVozila(regOznakaTextField.getText());
+		dostavljac.setTipVozila(TipVozila.valueOf(tipVozilacomboBox.getSelectedItem().toString()));
+		
+		try {
+			validirajDostavljaca(dostavljac);
+			
+			izvorPodataka.getDostavljaci().add(dostavljac);
+			
+			JOptionPane.showMessageDialog( null, "Dostavljac dodat!", "OK",JOptionPane.INFORMATION_MESSAGE);
+			return true;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog( null, e.getMessage(), "Greška",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return false;
+		
+	}
+	
+	private void validirajDostavljaca(Dostavljac dostavljac) throws Exception {
+		if(dostavljac.getIme() == null ||  "".equals(dostavljac.getIme())) {
+			throw new Exception("Ime dostavljaca ne moze biti prazno!");
+		}
+		if(dostavljac.getPrezime() == null || "".equals(dostavljac.getPrezime())) {
+			throw new Exception("Prezime dostavljaca ne moze biti prazno!");
+		}
+		
+		// TODO: dodati validaciju za ostala polja
+	}
+
+	private boolean sacuvajKupca() {
+		return false;
+	}
+
+
+	public void dodavanjeDostavljaca() {
+		tipVozilacomboBox.setVisible(true);
+		lblTipVozila.setVisible(true);
+		regOznakaTextField.setVisible(true);
+		lblRegOznaka.setVisible(true);
+		
+		dodavanjeDostavljaca = true;
+	}
+
+	public void dodavanjeKupca() {
+		tipVozilacomboBox.setVisible(false);
+		lblTipVozila.setVisible(false);
+		regOznakaTextField.setVisible(false);
+		lblRegOznaka.setVisible(false);
+		
+		dodavanjeDostavljaca = false;
 	}
 }

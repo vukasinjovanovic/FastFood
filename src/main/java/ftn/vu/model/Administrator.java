@@ -24,6 +24,11 @@ public class Administrator extends Korisnik {
 	public void setPlata(double plata) {
 		this.plata = plata;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "|" + jmbg + "|" + plata + "";
+	}
 	
 	
 

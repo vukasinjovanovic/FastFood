@@ -1,11 +1,14 @@
 package ftn.vu.fajl;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ftn.vu.izvor.podataka.IzvorPodataka;
@@ -15,6 +18,10 @@ import ftn.vu.model.TipVozila;
 
 public class RadSaFajlom {
 	
+	public static final String ADMINISTRATOR_FAJL = "src/main/resources/administrator.txt";
+	public static final String DOSTAVLJAC_FAJL = "src/main/resources/dostavljac.txt";
+	
+	
 	
 	public RadSaFajlom() {
 	}
@@ -23,20 +30,54 @@ public class RadSaFajlom {
 		
 	    IzvorPodataka izvorPodataka = new IzvorPodataka();
 	    
-	    List<String> linijeAdmin = citajFajl("src/main/resources/administrator.txt");
+	    List<String> linijeAdmin = citajFajl(ADMINISTRATOR_FAJL);
 		
 	    List<Administrator> administratori = parsirajAdministratore(linijeAdmin);
 	    
 	    izvorPodataka.setAdministratori(administratori);
 	    
 	    
-	    List<String> linijeDostavljac = citajFajl("src/main/resources/dostavljac.txt");
+	    List<String> linijeDostavljac = citajFajl(DOSTAVLJAC_FAJL);
 	    
 	    List<Dostavljac> dostavljaci = parsirajDostavljace(linijeDostavljac);
 	    
 	    izvorPodataka.setDostavljaci(dostavljaci);
 	    
 		return izvorPodataka;
+	}
+	
+	public void pisiFajlove(IzvorPodataka izvorPodataka) throws IOException {
+		
+		pisiPodatke(izvorPodataka.getAdministratori(), ADMINISTRATOR_FAJL);
+		
+		pisiPodatke(izvorPodataka.getDostavljaci(), DOSTAVLJAC_FAJL);
+		
+		//TODO: dodati pisanje za ostale entitete
+	} 
+
+	private void pisiPodatke(Collection list, String imeFajla) throws IOException {
+		
+		String sadrzaj = konvertujUTxt(list);
+		
+		pisiUFajl(sadrzaj, imeFajla);
+		
+	}
+	
+	private void pisiUFajl(String sadrzaj, String imeFajla) throws IOException {
+		File artikliFile = new File(imeFajla);
+		BufferedWriter writer = new BufferedWriter(new FileWriter(artikliFile));
+		writer.write(sadrzaj);
+		writer.close();
+	}
+
+	private String konvertujUTxt(Collection list) {
+		String rezultat = "";
+		for (Object obj: list) {
+			rezultat = rezultat + obj.toString() + "\n";
+			
+		}
+		System.out.println(rezultat);
+		return rezultat;
 	}
 
 	private List<String> citajFajl(String fajl) throws IOException {
@@ -104,6 +145,7 @@ public class RadSaFajlom {
 			dostavljac.setPlata(Double.parseDouble(polja[7]));
 			
 			dostavljac.setTipVozila(TipVozila.valueOf(polja[8]));
+			dostavljac.setRegistarskaOznakaVozila(polja[9]);
 			
 			dostavljaci.add(dostavljac);
 		}

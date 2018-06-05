@@ -11,5 +11,10 @@ public abstract class Identifikator {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
 	
 }

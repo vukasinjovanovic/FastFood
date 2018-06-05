@@ -1,1 +1,1 @@
-1|Vozac1|Vozac1|M|vukasinD|vukasinD|2112999880044|30000.23|SKUTER
+1|Vozac1|Vozac1|M|vukasinD|vukasinD|2112999880044|30000.23|SKUTER|123456

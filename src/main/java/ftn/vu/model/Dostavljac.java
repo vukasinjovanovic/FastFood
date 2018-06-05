@@ -41,6 +41,11 @@ public class Dostavljac extends Korisnik {
 	public void setRegistarskaOznakaVozila(String registarskaOznakaVozila) {
 		this.registarskaOznakaVozila = registarskaOznakaVozila;
 		
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "|" + jmbg + "|" + plata + "|" + tipVozila + "|" + registarskaOznakaVozila + "";
 	}	
 	
 	

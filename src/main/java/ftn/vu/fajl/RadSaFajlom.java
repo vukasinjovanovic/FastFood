@@ -14,6 +14,7 @@ import java.util.List;
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Pol;
 import ftn.vu.model.TipVozila;
 
 public class RadSaFajlom {
@@ -116,7 +117,7 @@ public class RadSaFajlom {
 			administrator.setId(Long.parseLong(polja[0]));
 			administrator.setIme(polja[1]);
 			administrator.setPrezime(polja[2]);
-			administrator.setPol(polja[3]);
+			administrator.setPol(Pol.valueOf(polja[3]));
 			administrator.setKorisnickoIme(polja[4]);
 			administrator.setLozinka(polja[5]);
 			administrator.setJmbg(Long.parseLong(polja[6]));
@@ -138,7 +139,7 @@ public class RadSaFajlom {
 			dostavljac.setId(Long.parseLong(polja[0]));
 			dostavljac.setIme(polja[1]);
 			dostavljac.setPrezime(polja[2]);
-			dostavljac.setPol(polja[3]);
+			dostavljac.setPol(Pol.valueOf(polja[3]));
 			dostavljac.setKorisnickoIme(polja[4]);
 			dostavljac.setLozinka(polja[5]);
 			dostavljac.setJmbg(Long.parseLong(polja[6]));

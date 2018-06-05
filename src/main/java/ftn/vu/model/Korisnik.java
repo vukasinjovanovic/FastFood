@@ -4,7 +4,7 @@ public abstract class Korisnik extends Identifikator {
 
 	protected String ime;
 	protected String prezime;
-	protected String pol;
+	protected Pol pol;
 	protected String korisnickoIme;
 	protected String lozinka;
 
@@ -24,11 +24,11 @@ public abstract class Korisnik extends Identifikator {
 		this.prezime = prezime;
 	}
 
-	public String getPol() {
+	public Pol getPol() {
 		return pol;
 	}
 
-	public void setPol(String pol) {
+	public void setPol(Pol pol) {
 		this.pol = pol;
 	}
 

@@ -1,2 +1,2 @@
-1|Vukasin|Jovanovic|M|vukasin|vukasin|2112999880044|200500.23
-2|Bosa|Jovanovic|Z|bosa|lozinka|123456|100500.15
+1|Vukasin|Jovanovic|MUSKI|vukasin|vukasin|2112999880044|200500.23
+2|Bosa|Jovanovic|ZENSKI|bosa|lozinka|123456|100500.15

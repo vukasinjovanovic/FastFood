@@ -70,7 +70,7 @@ public class Login {
 		odustaniDugme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Kliknuto na odustani!");
-				// akcija na klik: Odustani
+				// akcija na klik: Odustaniz
 
 				// ciste se teks polja
 				korisnickoImeTekstPolje.setText("");
@@ -95,7 +95,6 @@ public class Login {
 					// kad je uspesno logovanje, otvara se glavni ekran
 					glavniEkran.setVisible(true);
 					glavniEkran.setAdministrator(administrator);
-					glavniEkran.setIzvorPodataka(izvorPodataka);
 					glavniEkran.pripremiZaAdmina();
 					loginJFrame.dispose();
 					return;
@@ -107,7 +106,6 @@ public class Login {
 				if (dostavljac != null) {
 					glavniEkran.setVisible(true);
 					glavniEkran.setDostavljac(dostavljac);
-					glavniEkran.setIzvorPodataka(izvorPodataka);
 					glavniEkran.pripremiZaDostavljaca();
 					loginJFrame.dispose();
 					return;

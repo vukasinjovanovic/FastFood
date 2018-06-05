@@ -11,14 +11,33 @@ import ftn.vu.fajl.RadSaFajlom;
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GlavniEkran extends JFrame {
+	
+	private Administrator administrator = null;
+	
+	
+	JButton btnDodajDostavljaca = new JButton("Dodaj dostavljaca");
 
 	public GlavniEkran(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		
+		dodajDogadjaje(radSaFajlom, izvorPodataka);
+		
+		sakriSveElemente();
+	}
+
+	private void sakriSveElemente() {
+		btnDodajDostavljaca.setVisible(false);
+	}
+
+	private void dodajDogadjaje(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				
@@ -31,25 +50,31 @@ public class GlavniEkran extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		
+		btnDodajDostavljaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
+				nke.setVisible(true);
+			}
+		});
+		
+		btnDodajDostavljaca.setBounds(10, 29, 147, 23);
+		getContentPane().add(btnDodajDostavljaca);
+		
 	}
 
 	public void setAdministrator(Administrator administrator) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setIzvorPodataka(IzvorPodataka izvorPodataka) {
-		// TODO Auto-generated method stub
-
+		this.administrator = administrator;
 	}
 
 	public void pripremiZaAdmina() {
-		System.out.println("pripremiZaAdmina");
-
+		System.out.println("U metodi pripremiZaAdmina");
+		btnDodajDostavljaca.setVisible(true);
 	}
 
 	public void pripremiZaDostavljaca() {
-		System.out.println("pripremiZaDostavljaca");
+		System.out.println("U metodi pripremiZaDostavljaca");
 
 	}
 
@@ -57,5 +82,4 @@ public class GlavniEkran extends JFrame {
 		// TODO Auto-generated method stub
 
 	}
-
 }

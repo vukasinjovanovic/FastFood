@@ -8,6 +8,7 @@ import ftn.vu.fajl.RadSaFajlom;
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Kupac;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -110,10 +111,20 @@ public class Login {
 					loginJFrame.dispose();
 					return;
 				}
-
-				if (administrator == null) {
-					porukaLabela.setVisible(true);
+				
+				Kupac kupac = izvorPodataka.pronadjiKupca(korisnickoImeTekstPolje.getText(),
+						lozinkaTekstPolje.getText());
+				
+				if(kupac != null) {
+					glavniEkran.setVisible(true);
+					glavniEkran.setKupac(kupac);
+					glavniEkran.pripremiZaKupca();
+					loginJFrame.dispose();
+					return;
 				}
+				
+				porukaLabela.setVisible(true);
+
 
 			}
 		});

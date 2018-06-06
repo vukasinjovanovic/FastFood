@@ -4,7 +4,7 @@ public class Kupac extends Korisnik {
 	
 	private String adresa;
 	
-	private int brojTelefona;
+	private String brojTelefona;
 	
 	public String getAdresa () {
 		return adresa;
@@ -14,15 +14,19 @@ public class Kupac extends Korisnik {
 		this.adresa = adresa;
 	}
 	
-	public int getBrojTelefona () {
+	public String getBrojTelefona () {
 		return brojTelefona;
 	}
 	
-	public void setBrojTelefona (int brojTelefona) {
+	public void setBrojTelefona (String brojTelefona) {
 		this.brojTelefona = brojTelefona;
 		
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return super.toString() + "|" + adresa + "|" + brojTelefona + "";
+	}
+	
+	
 }

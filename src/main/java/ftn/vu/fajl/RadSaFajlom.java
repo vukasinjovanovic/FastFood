@@ -14,6 +14,7 @@ import java.util.List;
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Kupac;
 import ftn.vu.model.Pol;
 import ftn.vu.model.TipVozila;
 
@@ -21,6 +22,7 @@ public class RadSaFajlom {
 	
 	public static final String ADMINISTRATOR_FAJL = "src/main/resources/administrator.txt";
 	public static final String DOSTAVLJAC_FAJL = "src/main/resources/dostavljac.txt";
+	public static final String KUPAC_FAJL = "src/main/resources/kupac.txt";
 	
 	
 	long maxId = 0;
@@ -45,16 +47,27 @@ public class RadSaFajlom {
 	    
 	    izvorPodataka.setDostavljaci(dostavljaci);
 	    
+	    
+	    List<String> linijeKupac = citajFajl(KUPAC_FAJL);
+	    
+	    List<Kupac> kupci = parsirajKupce(linijeKupac);
+	    
+	    izvorPodataka.setKupci(kupci);
+	    
+	    
 	    izvorPodataka.setMaxId(this.maxId);
 	    
 		return izvorPodataka;
 	}
-	
+
+
 	public void pisiFajlove(IzvorPodataka izvorPodataka) throws IOException {
 		
 		pisiPodatke(izvorPodataka.getAdministratori(), ADMINISTRATOR_FAJL);
 		
 		pisiPodatke(izvorPodataka.getDostavljaci(), DOSTAVLJAC_FAJL);
+		
+		pisiPodatke(izvorPodataka.getKupci(), KUPAC_FAJL);
 		
 		//TODO: dodati pisanje za ostale entitete
 	} 
@@ -144,9 +157,9 @@ public class RadSaFajlom {
 	private List<Dostavljac> parsirajDostavljace(List<String> linijeDostavljac) {
 		List<Dostavljac> dostavljaci = new ArrayList<Dostavljac>();
 		
-		for (String adminString : linijeDostavljac) {
+		for (String dostavljacString : linijeDostavljac) {
 			Dostavljac dostavljac = new Dostavljac();
-			String [] polja = adminString.split("\\|");
+			String [] polja = dostavljacString.split("\\|");
 			dostavljac.setId(Long.parseLong(polja[0]));
 			dostavljac.setIme(polja[1]);
 			dostavljac.setPrezime(polja[2]);
@@ -165,6 +178,28 @@ public class RadSaFajlom {
 		}
 		
 		return dostavljaci;
+	}
+	
+	private List<Kupac> parsirajKupce(List<String> linijeKupac) {
+		List<Kupac> kupci = new ArrayList<Kupac>();
+		
+		for (String kupacString : linijeKupac) {
+			Kupac kupac = new Kupac();
+			String [] polja = kupacString.split("\\|");
+			kupac.setId(Long.parseLong(polja[0]));
+			kupac.setIme(polja[1]);
+			kupac.setPrezime(polja[2]);
+			kupac.setPol(Pol.valueOf(polja[3]));
+			kupac.setKorisnickoIme(polja[4]);
+			kupac.setLozinka(polja[5]);
+			kupac.setAdresa(polja[6]);
+			kupac.setBrojTelefona(polja[7]);
+			
+			postaviMaxId(kupac.getId());
+			
+			kupci.add(kupac);
+		}
+		return kupci;
 	}
 
 }

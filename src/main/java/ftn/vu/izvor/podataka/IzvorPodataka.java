@@ -5,12 +5,15 @@ import java.util.List;
 
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Kupac;
 
 public class IzvorPodataka {
 	
 	private List<Administrator> administratori = new ArrayList<Administrator>();
 	
 	private List<Dostavljac> dostavljaci = new ArrayList<Dostavljac>();
+	
+	private List<Kupac> kupci = new ArrayList<Kupac>();
 
 	private long maxId;
 
@@ -32,6 +35,14 @@ public class IzvorPodataka {
 	public void setDostavljaci(List<Dostavljac> dostavljaci) {
 		this.dostavljaci = dostavljaci;
 	}
+	
+	public List<Kupac> getKupci() {
+		return kupci;
+	}
+
+	public void setKupci(List<Kupac> kupci) {
+		this.kupci = kupci;
+	}
 
 	public Administrator pronadjiAdmina(String kIme, String lozinka) {
 		for (Administrator administrator : administratori) {
@@ -46,6 +57,15 @@ public class IzvorPodataka {
 		for (Dostavljac dostavljac : dostavljaci) {
 			if(dostavljac.getKorisnickoIme().equals(kIme) && dostavljac.getLozinka().equals(lozinka)) {
 				return dostavljac;
+			}
+		}
+		return null;
+	}
+	
+	public Kupac pronadjiKupca(String kIme, String lozinka) {
+		for (Kupac k : kupci) {
+			if(k.getKorisnickoIme().equals(kIme) && k.getLozinka().equals(lozinka)) {
+				return k;
 			}
 		}
 		return null;

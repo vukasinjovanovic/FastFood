@@ -11,6 +11,8 @@ import ftn.vu.fajl.RadSaFajlom;
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Kupac;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,6 +23,8 @@ public class GlavniEkran extends JFrame {
 	
 	
 	JButton btnDodajDostavljaca = new JButton("Dodaj dostavljaca");
+	JButton dodajKupcaBtn = new JButton("Dodaj kupca");
+	JButton listaPorudzbinaBtn = new JButton("Porudzbine");
 
 	public GlavniEkran(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -35,6 +39,8 @@ public class GlavniEkran extends JFrame {
 
 	private void sakriSveElemente() {
 		btnDodajDostavljaca.setVisible(false);
+		dodajKupcaBtn.setVisible(false);
+		listaPorudzbinaBtn.setVisible(false);
 	}
 
 	private void dodajDogadjaje(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
@@ -62,8 +68,7 @@ public class GlavniEkran extends JFrame {
 		
 		btnDodajDostavljaca.setBounds(10, 29, 147, 23);
 		getContentPane().add(btnDodajDostavljaca);
-		
-		JButton dodajKupcaBtn = new JButton("Dodaj kupca");
+
 		dodajKupcaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
@@ -75,6 +80,10 @@ public class GlavniEkran extends JFrame {
 		dodajKupcaBtn.setBounds(10, 63, 147, 23);
 		getContentPane().add(dodajKupcaBtn);
 		
+		
+		listaPorudzbinaBtn.setBounds(10, 97, 147, 23);
+		getContentPane().add(listaPorudzbinaBtn);
+		
 	}
 
 	public void setAdministrator(Administrator administrator) {
@@ -84,15 +93,27 @@ public class GlavniEkran extends JFrame {
 	public void pripremiZaAdmina() {
 		System.out.println("U metodi pripremiZaAdmina");
 		btnDodajDostavljaca.setVisible(true);
+		listaPorudzbinaBtn.setVisible(true);
+		dodajKupcaBtn.setVisible(true);
 	}
 
 	public void pripremiZaDostavljaca() {
 		System.out.println("U metodi pripremiZaDostavljaca");
-
+		listaPorudzbinaBtn.setVisible(true);
 	}
 
 	public void setDostavljac(Dostavljac dostavljac) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setKupac(Kupac kupac) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void pripremiZaKupca() {
+		System.out.println("U metodi pripremiZaKupca");
+		listaPorudzbinaBtn.setVisible(true);
 	}
 }

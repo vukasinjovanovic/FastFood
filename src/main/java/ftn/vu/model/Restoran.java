@@ -29,18 +29,7 @@ public class Restoran extends Identifikator{
 	public void setAdresa (String adresa) {
 		this.adresa = adresa;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((adresa == null) ? 0 : adresa.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((kategorija == null) ? 0 : kategorija.hashCode());
-		result = prime * result + ((naziv == null) ? 0 : naziv.hashCode());
-		return result;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,6 +54,11 @@ public class Restoran extends Identifikator{
 		} else if (!naziv.equals(other.naziv))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "|" + naziv + "|" + adresa + "|" + kategorija + "";
 	}
 	
 	

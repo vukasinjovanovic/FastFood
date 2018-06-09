@@ -5,7 +5,11 @@ import java.util.List;
 
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Jelo;
 import ftn.vu.model.Kupac;
+import ftn.vu.model.Pice;
+import ftn.vu.model.Porudzbina;
+import ftn.vu.model.Restoran;
 
 public class IzvorPodataka {
 	
@@ -14,6 +18,14 @@ public class IzvorPodataka {
 	private List<Dostavljac> dostavljaci = new ArrayList<Dostavljac>();
 	
 	private List<Kupac> kupci = new ArrayList<Kupac>();
+	
+	private List<Jelo> jela = new ArrayList<Jelo>();
+	
+	private List<Pice> pice = new ArrayList<Pice>();
+	
+	private List<Porudzbina> porudzbine = new ArrayList<Porudzbina>();
+	
+	private List<Restoran> restorani = new ArrayList<Restoran>();
 
 	private long maxId;
 
@@ -42,6 +54,38 @@ public class IzvorPodataka {
 
 	public void setKupci(List<Kupac> kupci) {
 		this.kupci = kupci;
+	}
+	
+	public List<Jelo> getJela() {
+		return jela;
+	}
+
+	public void setJela(List<Jelo> jela) {
+		this.jela = jela;
+	}
+
+	public List<Pice> getPice() {
+		return pice;
+	}
+
+	public void setPice(List<Pice> pice) {
+		this.pice = pice;
+	}
+
+	public List<Porudzbina> getPorudzbine() {
+		return porudzbine;
+	}
+
+	public void setPorudzbine(List<Porudzbina> porudzbine) {
+		this.porudzbine = porudzbine;
+	}
+	
+	public List<Restoran> getRestorani() {
+		return restorani;
+	}
+
+	public void setRestorani(List<Restoran> restorani) {
+		this.restorani = restorani;
 	}
 
 	public Administrator pronadjiAdmina(String kIme, String lozinka) {

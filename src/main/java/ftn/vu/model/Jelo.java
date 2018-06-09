@@ -12,4 +12,8 @@ public class Jelo extends Artikal {
 		this.kolicina = kolicina;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + "|" + kolicina + "";
+	}
 }

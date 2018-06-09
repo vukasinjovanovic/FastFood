@@ -7,15 +7,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import ftn.vu.izvor.podataka.IzvorPodataka;
 import ftn.vu.model.Administrator;
 import ftn.vu.model.Dostavljac;
+import ftn.vu.model.Jelo;
+import ftn.vu.model.Kategorija;
 import ftn.vu.model.Kupac;
+import ftn.vu.model.Pice;
 import ftn.vu.model.Pol;
+import ftn.vu.model.Porudzbina;
+import ftn.vu.model.Restoran;
 import ftn.vu.model.TipVozila;
 
 public class RadSaFajlom {
@@ -23,16 +32,21 @@ public class RadSaFajlom {
 	public static final String ADMINISTRATOR_FAJL = "src/main/resources/administrator.txt";
 	public static final String DOSTAVLJAC_FAJL = "src/main/resources/dostavljac.txt";
 	public static final String KUPAC_FAJL = "src/main/resources/kupac.txt";
-	
+	public static final String JELO_FAJL = "src/main/resources/jelo.txt";
+	public static final String PICE_FAJL = "src/main/resources/pice.txt";
+	public static final String RESTORAN_FAJL = "src/main/resources/restoran.txt";
+	public static final String PORUDZBINA_FAJL = "src/main/resources/porudzbina.txt";
 	
 	long maxId = 0;
+	
+	IzvorPodataka izvorPodataka;
 	
 	public RadSaFajlom() {
 	}
 
-	public IzvorPodataka citajFajlove() throws IOException {
+	public IzvorPodataka citajFajlove() throws Exception {
 		
-	    IzvorPodataka izvorPodataka = new IzvorPodataka();
+	    izvorPodataka = new IzvorPodataka();
 	    
 	    List<String> linijeAdmin = citajFajl(ADMINISTRATOR_FAJL);
 		
@@ -54,6 +68,31 @@ public class RadSaFajlom {
 	    
 	    izvorPodataka.setKupci(kupci);
 	    
+	    List<String> linijeRestorani = citajFajl(RESTORAN_FAJL);
+	    
+	    List<Restoran> restoran = parsirajRestorane(linijeRestorani);
+	    
+	    izvorPodataka.setRestorani(restoran);
+	    
+	    
+	    List<String> linijeJela = citajFajl(JELO_FAJL);
+	    
+	    List<Jelo> jela = parsirajJela(linijeJela);
+	    
+	    izvorPodataka.setJela(jela);
+	    
+	    List<String> linijePice = citajFajl(PICE_FAJL);
+	    
+	    List<Pice> pica = parsirajPica(linijePice);
+	    
+	    izvorPodataka.setPice(pica);
+	    
+	    List<String> linijePorudzbine = citajFajl(PORUDZBINA_FAJL);
+	    
+	    List<Porudzbina> porudzbine = parsirajPorudzbine(linijePorudzbine);
+	    
+	    izvorPodataka.setPorudzbine(porudzbine);
+	    
 	    
 	    izvorPodataka.setMaxId(this.maxId);
 	    
@@ -69,7 +108,14 @@ public class RadSaFajlom {
 		
 		pisiPodatke(izvorPodataka.getKupci(), KUPAC_FAJL);
 		
-		//TODO: dodati pisanje za ostale entitete
+		pisiPodatke(izvorPodataka.getJela(), JELO_FAJL);
+		
+		pisiPodatke(izvorPodataka.getPice(), PICE_FAJL);
+		
+		pisiPodatke(izvorPodataka.getRestorani(), RESTORAN_FAJL);
+		
+		pisiPodatke(izvorPodataka.getPorudzbine(), PORUDZBINA_FAJL);
+	
 	} 
 
 	private void pisiPodatke(Collection list, String imeFajla) throws IOException {
@@ -200,6 +246,155 @@ public class RadSaFajlom {
 			kupci.add(kupac);
 		}
 		return kupci;
+	}
+
+	private List<Jelo> parsirajJela(List<String> linijeJela) {
+		List<Jelo> jela = new ArrayList<Jelo>();
+		
+		for (String strJelo : linijeJela) {
+			Jelo jelo = new Jelo();
+			String [] polja = strJelo.split("\\|");
+			jelo.setId(Long.parseLong(polja[0]));
+			jelo.setNaziv(polja[1]);
+			jelo.setCena(Double.parseDouble(polja[2]));
+			jelo.setOpis(polja[3]);
+			jelo.setRestoran(pronadjiRestoran(polja[4]));
+			jelo.setKolicina(Integer.parseInt(polja[5]));
+			
+			postaviMaxId(jelo.getId());
+			
+			jela.add(jelo);
+			
+		}
+		return jela;
+	}
+	
+	private List<Pice> parsirajPica(List<String> linijePice) {
+		List<Pice> pica = new ArrayList<Pice>();
+		
+		for (String piceStr : linijePice) {
+			Pice pice = new Pice();
+			String [] polja = piceStr.split("\\|");
+			pice.setId(Long.parseLong(polja[0]));
+			pice.setNaziv(polja[1]);
+			pice.setCena(Double.parseDouble(polja[2]));
+			pice.setOpis(polja[3]);
+			pice.setRestoran(pronadjiRestoran(polja[4]));
+			pice.setKolicina(Double.parseDouble(polja[5]));
+			
+			postaviMaxId(pice.getId());
+			
+			pica.add(pice);
+		}
+		
+		return pica;
+	}
+	
+
+
+	private List<Restoran> parsirajRestorane(List<String> linijeRestorani) {
+		List<Restoran> restorani = new ArrayList<Restoran>();
+		
+		for (String string : linijeRestorani) {
+			Restoran restoran = new Restoran();
+			String [] polja = string.split("\\|");
+			restoran.setId(Long.parseLong(polja[0]));
+			restoran.setNaziv(polja[1]);
+			restoran.setAdresa(polja[2]);
+			restoran.setKategorija(Kategorija.valueOf(polja[3]));
+			
+			postaviMaxId(restoran.getId());
+			
+			restorani.add(restoran);
+			
+		}
+		return restorani;
+	}
+	
+	private List<Porudzbina> parsirajPorudzbine(List<String> linijePorudzbine) throws Exception {
+		List<Porudzbina> porudzbine = new ArrayList<Porudzbina>();
+		
+		for (String string : linijePorudzbine) {
+			String [] polja = string.split("\\|");
+			long id = Long.parseLong(polja[0]);
+			Restoran restoran = pronadjiRestoran(polja[1]);
+			Jelo jelo = pronadjiJelo(polja[2]);
+			Pice pice = pronadjiPice(polja[3]);
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date vreme = format.parse(polja[4]);
+			
+		    Kupac kupac = pronadjuKupca(polja[5]);
+		    
+		    Dostavljac dostavljac = pronadjuDostavljaca(polja[6]);
+		    
+			Porudzbina porudzbina = new Porudzbina(id, restoran, jelo, pice, vreme, kupac, dostavljac);
+			
+			postaviMaxId(porudzbina.getId());
+			
+			porudzbine.add(porudzbina);
+		}
+		return porudzbine;
+	}
+
+	private Dostavljac pronadjuDostavljaca(String string) {
+		long dostavljacId = Long.parseLong(string.replace("dostavljac ", ""));
+		
+		for (Dostavljac dostavljac: izvorPodataka.getDostavljaci()) {
+			if(dostavljac.getId() == dostavljacId) {
+				return dostavljac;
+			}
+		}
+		
+		return null;
+	}
+
+	private Kupac pronadjuKupca(String string) {
+		long kupacId = Long.parseLong(string.replace("kupac ", ""));
+		
+		for (Kupac kupac: izvorPodataka.getKupci()) {
+			if(kupac.getId() == kupacId) {
+				return kupac;
+			}
+		}
+		
+		return null;
+	}
+
+	private Pice pronadjiPice(String piceStr) {
+		long piceId = Long.parseLong(piceStr.replace("pice ", ""));
+		
+		for (Pice pice : izvorPodataka.getPice()) {
+			if(pice.getId() == piceId) {
+				return pice;
+			}
+		}
+		
+		return null;
+	}
+
+	private Jelo pronadjiJelo(String jeloStr) {
+		long jeloId = Long.parseLong(jeloStr.replace("jelo ", ""));
+		
+		for (Jelo jelo : izvorPodataka.getJela()) {
+			if(jelo.getId() == jeloId) {
+				return jelo;
+			}
+		}
+		
+		return null;
+	}
+
+	private Restoran pronadjiRestoran(String restoranStr) {
+		long restoranId = Long.parseLong(restoranStr.replace("restoran ", ""));
+		
+		for (Restoran restoran : izvorPodataka.getRestorani()) {
+			if(restoran.getId() == restoranId) {
+				return restoran;
+			}
+		}
+		
+		return null;
 	}
 
 }

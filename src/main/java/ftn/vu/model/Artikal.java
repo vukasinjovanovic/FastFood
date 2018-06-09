@@ -27,7 +27,7 @@ public abstract class Artikal extends Identifikator {
 		return opis;
 	}
 	
-	public void getOpis (String opis) {
+	public void setOpis (String opis) {
 		this.opis = opis;
 	}
 	
@@ -39,4 +39,8 @@ public abstract class Artikal extends Identifikator {
 		this.restoran = restoran;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + "|" + naziv + "|" + cena + "|" + opis+ "|restoran " + restoran.getId() + "";
+	}
 }

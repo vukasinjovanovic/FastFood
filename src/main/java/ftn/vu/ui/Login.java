@@ -11,8 +11,10 @@ import ftn.vu.model.Dostavljac;
 import ftn.vu.model.Kupac;
 
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -26,7 +28,11 @@ public class Login {
 
 	private IzvorPodataka izvorPodataka;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
+		
+		System.out.println(new Date());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(format.format(new Date()).toString());
 
 		RadSaFajlom radSaFajlom = new RadSaFajlom();
 

@@ -1,0 +1,9 @@
+1|Vukasin|Jovanovic|MUSKI|vukasin|vukasin|2112999880044|200500.23
+2|Bosa|Jovanovic|ZENSKI|bosa|lozinka|123456|100500.15
+3|Vozac1|Vozac1|MUSKI|vukasinD|vukasinD|2112999880044|30000.23|SKUTER|123456
+6|kupac1|kupac1|MUSKI|vukasinK|vukasinK|bulevar|064555555
+8|Test restoran|adresa|DOMACA_KUHINJA
+4|Pasulj|450.00|Dobar pasulj|restoran 8|350
+5|Supa|150.00|Pileca supa|restoran 8|300
+7|Kola|150.00|Crni sok|restoran 8|0.75
+9|restoran 8|jelo 4|pice 7|2018-06-09 23:02:55|kupac 6|dostavljac 3

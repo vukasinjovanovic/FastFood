@@ -1,0 +1,2 @@
+4|Pasulj|450.53|Dobar pasulj|restoran 8|350
+5|Supa|150.0|Pileca supa|restoran 8|300

@@ -7,12 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import ftn.vu.izvor.podataka.IzvorPodataka;
@@ -45,6 +43,8 @@ public class RadSaFajlom {
 	}
 
 	public IzvorPodataka citajFajlove() throws Exception {
+		
+		System.out.println("Ucitavanje fajlova START!");
 		
 	    izvorPodataka = new IzvorPodataka();
 	    
@@ -96,11 +96,15 @@ public class RadSaFajlom {
 	    
 	    izvorPodataka.setMaxId(this.maxId);
 	    
+	    System.out.println("Ucitavanje fajlova KRAJ!");
+	    
 		return izvorPodataka;
 	}
 
 
 	public void pisiFajlove(IzvorPodataka izvorPodataka) throws IOException {
+		
+		System.out.println("Pisanje u fajlove START!");
 		
 		pisiPodatke(izvorPodataka.getAdministratori(), ADMINISTRATOR_FAJL);
 		
@@ -115,6 +119,8 @@ public class RadSaFajlom {
 		pisiPodatke(izvorPodataka.getRestorani(), RESTORAN_FAJL);
 		
 		pisiPodatke(izvorPodataka.getPorudzbine(), PORUDZBINA_FAJL);
+		
+		System.out.println("Pisanje u fajlove KRAJ!");
 	
 	} 
 
@@ -137,7 +143,6 @@ public class RadSaFajlom {
 		String rezultat = "";
 		for (Object obj: list) {
 			rezultat = rezultat + obj.toString() + "\n";
-			
 		}
 		System.out.println(rezultat);
 		return rezultat;

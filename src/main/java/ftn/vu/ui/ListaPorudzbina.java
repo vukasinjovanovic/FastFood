@@ -1,7 +1,9 @@
 package ftn.vu.ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
@@ -12,6 +14,7 @@ import ftn.vu.model.Porudzbina;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
 
 public class ListaPorudzbina extends JDialog {
 	private JTable tabela;
@@ -25,11 +28,19 @@ public class ListaPorudzbina extends JDialog {
 		setLocationRelativeTo(null);
 		setModal(true);
 		
+		JButton dodajBtn = new JButton("Dodaj");
+		JButton izmeniBtn = new JButton("Izmeni");
+		
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(dodajBtn, BorderLayout.WEST);
+		panel.add(izmeniBtn, BorderLayout.WEST);
+		getContentPane().add(panel, BorderLayout.NORTH);
+		
 		tabela = new JTable();
 		
 		JScrollPane scrollPane = new JScrollPane(tabela);
 		
-		add(scrollPane, BorderLayout.CENTER);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		postaviPorudzbneUTabelu();
 		

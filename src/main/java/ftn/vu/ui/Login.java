@@ -13,14 +13,12 @@ import ftn.vu.model.Kupac;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
-public class Login {
+public class Login extends JFrame {
 
-	private JFrame loginJFrame;
+	//private JFrame loginJFrame;
 	private JTextField korisnickoImeTekstPolje;
 	private JTextField lozinkaTekstPolje;
 	private JLabel porukaLabela;
@@ -28,49 +26,35 @@ public class Login {
 
 	private IzvorPodataka izvorPodataka;
 
-	public static void main(String[] args) throws Exception {
-		
-		System.out.println(new Date());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(format.format(new Date()).toString());
-
-		RadSaFajlom radSaFajlom = new RadSaFajlom();
-
-		Login loginProzor = new Login();
-		loginProzor.izvorPodataka = radSaFajlom.citajFajlove();
-		loginProzor.loginJFrame.setVisible(true);
-		loginProzor.glavniEkran = new GlavniEkran(radSaFajlom, loginProzor.izvorPodataka);
-
-	}
-
-	public Login() {
+	public Login(RadSaFajlom radSaFajlom, IzvorPodataka izvorPodataka) {
+		this.izvorPodataka = izvorPodataka;
+		this.glavniEkran = new GlavniEkran(radSaFajlom, izvorPodataka);
 		inicijalizuj();
 	}
 
 	private void inicijalizuj() {
-		loginJFrame = new JFrame(); // novi objekat tipa JFrame
-		loginJFrame.setBounds(100, 100, 408, 180); // dimenzije
-		loginJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // prekini rad programa kad se svi prozori
+		setBounds(100, 100, 408, 180); // dimenzije
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // prekini rad programa kad se svi prozori
 																		// zatvore
-		loginJFrame.setLocationRelativeTo(null); // prikazi formu na centru ekrana
-		loginJFrame.getContentPane().setLayout(null); // koristi apsolutno pozicioniranje (pixel po pixel)
+		setLocationRelativeTo(null); // prikazi formu na centru ekrana
+		getContentPane().setLayout(null); // koristi apsolutno pozicioniranje (pixel po pixel)
 
 		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
 		lblKorisnickoIme.setBounds(10, 11, 108, 14);
-		loginJFrame.getContentPane().add(lblKorisnickoIme);
+		getContentPane().add(lblKorisnickoIme);
 
 		JLabel lblLozinka = new JLabel("Lozinka:");
 		lblLozinka.setBounds(10, 36, 108, 14);
-		loginJFrame.getContentPane().add(lblLozinka);
+		getContentPane().add(lblLozinka);
 
 		korisnickoImeTekstPolje = new JTextField();
 		korisnickoImeTekstPolje.setBounds(128, 8, 225, 20);
-		loginJFrame.getContentPane().add(korisnickoImeTekstPolje);
+		getContentPane().add(korisnickoImeTekstPolje);
 		korisnickoImeTekstPolje.setColumns(10);
 
 		lozinkaTekstPolje = new JTextField();
 		lozinkaTekstPolje.setBounds(128, 33, 225, 20);
-		loginJFrame.getContentPane().add(lozinkaTekstPolje);
+		getContentPane().add(lozinkaTekstPolje);
 		lozinkaTekstPolje.setColumns(10);
 
 		JButton odustaniDugme = new JButton("Odustani");
@@ -84,11 +68,11 @@ public class Login {
 				lozinkaTekstPolje.setText("");
 
 				// zatvara se forma i sam program
-				loginJFrame.dispose();
+				dispose();
 			}
 		});
 		odustaniDugme.setBounds(225, 92, 89, 23);
-		loginJFrame.getContentPane().add(odustaniDugme);
+		getContentPane().add(odustaniDugme);
 
 		JButton prijaviSeDugme = new JButton("Prijavi se");
 		prijaviSeDugme.addActionListener(new ActionListener() {
@@ -103,7 +87,7 @@ public class Login {
 					glavniEkran.setVisible(true);
 					glavniEkran.setAdministrator(administrator);
 					glavniEkran.pripremiZaAdmina();
-					loginJFrame.dispose();
+					dispose();
 					return;
 				}
 
@@ -114,7 +98,7 @@ public class Login {
 					glavniEkran.setVisible(true);
 					glavniEkran.setDostavljac(dostavljac);
 					glavniEkran.pripremiZaDostavljaca();
-					loginJFrame.dispose();
+					dispose();
 					return;
 				}
 				
@@ -125,7 +109,7 @@ public class Login {
 					glavniEkran.setVisible(true);
 					glavniEkran.setKupac(kupac);
 					glavniEkran.pripremiZaKupca();
-					loginJFrame.dispose();
+					dispose();
 					return;
 				}
 				
@@ -135,12 +119,12 @@ public class Login {
 			}
 		});
 		prijaviSeDugme.setBounds(128, 92, 89, 23);
-		loginJFrame.getContentPane().add(prijaviSeDugme);
+		getContentPane().add(prijaviSeDugme);
 
 		porukaLabela = new JLabel("Neuspesno logovanje!");
 		porukaLabela.setForeground(Color.RED);
 		porukaLabela.setBounds(128, 64, 225, 14);
 		porukaLabela.setVisible(false);
-		loginJFrame.getContentPane().add(porukaLabela);
+		getContentPane().add(porukaLabela);
 	}
 }

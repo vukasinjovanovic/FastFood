@@ -1,1 +1,2 @@
-6|kupac1|kupac1|MUSKI|vukasinK|vukasinK|bulevar|064555555
+7|kupac1|kupac1|MUSKI|vukasinK|vukasinK|bulevar|064555555
+8|kupac2|kupac2|MUSKI|vukasinK2|vukasinK2|jevrejska|06466666

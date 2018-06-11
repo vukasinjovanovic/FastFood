@@ -1,1 +1,2 @@
-8|Test restoran|adresa|DOMACA_KUHINJA
+13|Test restoran|adresa|DOMACA_KUHINJA
+14|Kinez|jevrejska 15|KINESKI_RESTORAN

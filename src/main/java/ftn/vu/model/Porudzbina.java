@@ -37,7 +37,7 @@ public class Porudzbina extends Identifikator {
 		if (porudzbina.getJelo() == null) {
 			throw new Exception("Jelo ne moze biti null!");
 		}
-		if (porudzbina.getPice() == null) {
+		if (porudzbina.getVreme() == null) {
 			throw new Exception("Vreme ne moze biti null!");
 		}
 		if (porudzbina.getKupac() == null) {
@@ -106,8 +106,15 @@ public class Porudzbina extends Identifikator {
 		if(pice != null) {
 			return pice.getId() + "";
 		}
-		return "";
+		return "-1";
 	}
+	
+    private String getDostavljacId(){
+		if(dostavljac != null) {
+			return dostavljac.getId() + "";
+		}
+		return "-1";
+    }
 	
 	private String getVremeStr() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -119,7 +126,7 @@ public class Porudzbina extends Identifikator {
 		return super.toString() + "|restoran " + restoran.getId() + "|jelo "
 				+ jelo.getId() + "|pice " + getPiceId() + "|" + getVremeStr()
 				+ "|kupac " + kupac.getId() + "|dostavljac "
-				+ dostavljac.getId() + "";
+				+ getDostavljacId() + "";
 	}
 
 }

@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 public class GlavniEkran extends JFrame {
 	
 	private Administrator administrator = null;
+	private Kupac kupac = null;
+	private Dostavljac dostavljac = null;
 	
 	
 	JButton btnDodajDostavljaca = new JButton("Dodaj dostavljaca");
@@ -104,19 +106,17 @@ public class GlavniEkran extends JFrame {
 		dodajKupcaBtn.setVisible(true);
 	}
 
+	public void setDostavljac(Dostavljac dostavljac) {
+		this.dostavljac = dostavljac;
+	}
+	
 	public void pripremiZaDostavljaca() {
 		System.out.println("U metodi pripremiZaDostavljaca");
 		listaPorudzbinaBtn.setVisible(true);
 	}
 
-	public void setDostavljac(Dostavljac dostavljac) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setKupac(Kupac kupac) {
-		// TODO Auto-generated method stub
-		
+		this.kupac = kupac;
 	}
 
 	public void pripremiZaKupca() {

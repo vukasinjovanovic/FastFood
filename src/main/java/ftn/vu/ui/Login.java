@@ -86,6 +86,9 @@ public class Login extends JFrame {
 					// kad je uspesno logovanje, otvara se glavni ekran
 					glavniEkran.setVisible(true);
 					glavniEkran.setAdministrator(administrator);
+					izvorPodataka.setUlogovaniAdministrator(administrator);
+					izvorPodataka.setUlogovaniDostavljac(null);
+					izvorPodataka.setUlogovaniKupac(null);
 					glavniEkran.pripremiZaAdmina();
 					dispose();
 					return;
@@ -97,6 +100,9 @@ public class Login extends JFrame {
 				if (dostavljac != null) {
 					glavniEkran.setVisible(true);
 					glavniEkran.setDostavljac(dostavljac);
+					izvorPodataka.setUlogovaniAdministrator(null);
+					izvorPodataka.setUlogovaniDostavljac(dostavljac);
+					izvorPodataka.setUlogovaniKupac(null);
 					glavniEkran.pripremiZaDostavljaca();
 					dispose();
 					return;
@@ -108,6 +114,9 @@ public class Login extends JFrame {
 				if(kupac != null) {
 					glavniEkran.setVisible(true);
 					glavniEkran.setKupac(kupac);
+					izvorPodataka.setUlogovaniAdministrator(null);
+					izvorPodataka.setUlogovaniDostavljac(null);
+					izvorPodataka.setUlogovaniKupac(kupac);
 					glavniEkran.pripremiZaKupca();
 					dispose();
 					return;

@@ -260,7 +260,7 @@ public class PorudzbinaEkran extends JDialog {
 				izvorPodataka.getPorudzbine().add(index , test);	
 				this.porudzbina = test;
 				
-				listaPorudzbinaEkran.postaviPorudzbneUTabelu();
+				listaPorudzbinaEkran.popuniTabeluPodacima();
 				
 				JOptionPane.showMessageDialog(null, "Porudzbina izmenjena!", "OK",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -285,7 +285,7 @@ public class PorudzbinaEkran extends JDialog {
 						napomena);
 
 				izvorPodataka.getPorudzbine().add(porudzbina);
-				listaPorudzbinaEkran.postaviPorudzbneUTabelu();
+				listaPorudzbinaEkran.popuniTabeluPodacima();
 				JOptionPane.showMessageDialog(null, "Porudzbina dodata!", "OK",
 						JOptionPane.INFORMATION_MESSAGE);
 				dispose();

@@ -24,72 +24,36 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ListaPorudzbinaEkran extends JDialog {
-	private JTable tabela;
-	private IzvorPodataka izvorPodataka;
-
-	private Administrator administrator = null;
-	private Kupac kupac = null;
-	private Dostavljac dostavljac = null;
+public class ListaPorudzbinaEkran extends ListaPodatakaEkran {
 
 	public ListaPorudzbinaEkran(final IzvorPodataka izvorPodataka)  {
-		this.izvorPodataka = izvorPodataka;
-		this.administrator = izvorPodataka.getUlogovaniAdministrator();
-		this.kupac = izvorPodataka.getUlogovaniKupac();
-		this.dostavljac = izvorPodataka.getUlogovaniDostavljac();
-
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 720, 504);
-		setLocationRelativeTo(null);
-		setModal(true);
-
-		JButton dodajBtn = new JButton("Dodaj");
-		dodajBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				otvoriPorudzbinaEkran();
-			}
-		});
-		JButton izmeniBtn = new JButton("Izmeni");
-		izmeniBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				otvoriPorudzbinaEkranIzmena();
-			}
-		});
-
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(dodajBtn, BorderLayout.WEST);
-		panel.add(izmeniBtn, BorderLayout.WEST);
-		getContentPane().add(panel, BorderLayout.NORTH);
-		
-		JButton btnObrisi = new JButton("Obrisi");
-		btnObrisi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				brisanjePorudzbine();
-			}
-		});
-		panel.add(btnObrisi);
-
-		tabela = new JTable();
-
-		JScrollPane scrollPane = new JScrollPane(tabela);
-
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-		postaviPorudzbneUTabelu();
+		super(izvorPodataka);
 		
 		if(this.dostavljac != null) {
 			btnObrisi.setEnabled(false);
 			dodajBtn.setEnabled(false);
 		}
+	}
 
+	@Override
+	public void dodajAkcija() {
+		otvoriPorudzbinaEkran();
+	}
+
+	@Override
+	public void izmeniAkcija() {
+		otvoriPorudzbinaEkranIzmena();
+	}
+
+	@Override
+	public void obrisiAkcija() {
+		brisanjePorudzbine();
 	}
 
 	private void otvoriPorudzbinaEkran() {
 		PorudzbinaEkran porudzbinaEkran = new PorudzbinaEkran(izvorPodataka, this, null);
 		porudzbinaEkran.setVisible(true);
 	}
-	
-
 
 	private void otvoriPorudzbinaEkranIzmena() {
 		Porudzbina porudzbina = uzmiSelektovanuPorudzbinu();
@@ -124,53 +88,30 @@ public class ListaPorudzbinaEkran extends JDialog {
 		Porudzbina porudzbina = izvorPodataka.nadjiPorudzbinu(id);
 		return porudzbina;
 	}
-
-	public void postaviPorudzbneUTabelu()  {
-
-   
-		List<Porudzbina> porudzbine = getPorudzbine();
+	
+	@Override
+	public String[] dajKolone(){
+		String[] kolone = new String[] { "ID", "Restoran", "Jelo", "Pice",
+				"Vreme", "Kupac", "Dostavljac", "Ukupna cena", "Adresa", "Napomena" };
+		return kolone;
+	}
+	
+	@Override
+	public void popuniRedove(Object[][] redovi, Object obj, int indexReda) {
 		
-		if(porudzbine != null && !porudzbine.isEmpty()) {
-			
-			String[] kolone = new String[] { "ID", "Restoran", "Jelo", "Pice",
-					"Vreme", "Kupac", "Dostavljac", "Ukupna cena", "Adresa", "Napomena" };
-			
-			Object[][] redovi = new Object[porudzbine.size()][kolone.length];
+		Porudzbina porudzbina = (Porudzbina) obj;
 
-			int index = 0;
-			for (Porudzbina porudzbina : porudzbine) {
-
-				redovi[index][0] = porudzbina.getId();
-				redovi[index][1] = porudzbina.getRestoran().getNaziv();
-				redovi[index][2] = porudzbina.getJelo().getNaziv();
-				redovi[index][3] = getNazivPica(porudzbina);
-				redovi[index][4] = porudzbina.getVreme();
-				redovi[index][5] = porudzbina.getKupac().getIme()
-						+ porudzbina.getKupac().getPrezime();
-				redovi[index][6] = getDostavljac(porudzbina);
-				redovi[index][7] = porudzbina.getUkupnaCena();
-				redovi[index][8] = porudzbina.getAdresa();
-				redovi[index][9] = porudzbina.getNapomena();
-				
-				index++;
-			}
-
-			DefaultTableModel model = new DefaultTableModel(redovi, kolone);
-
-			tabela.setModel(model);
-
-			// Neka standardna podesavanja JTable komponente:
-			// Dozvoljeno selektovanje redova
-			tabela.setRowSelectionAllowed(true);
-			// Ali ne i selektovanje kolona
-			tabela.setColumnSelectionAllowed(false);
-			// Dozvoljeno selektovanje samo jednog reda odjednom
-			tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			// Onemoguceno je direktno editovanje sadrzaja u celijama
-			tabela.setDefaultEditor(Object.class, null);
-		} else {
-			JOptionPane.showMessageDialog(null, "Nema vidljivih porudzbina!", "OK",JOptionPane.INFORMATION_MESSAGE);
-		}
+		redovi[indexReda][0] = porudzbina.getId();
+		redovi[indexReda][1] = porudzbina.getRestoran().getNaziv();
+		redovi[indexReda][2] = porudzbina.getJelo().getNaziv();
+		redovi[indexReda][3] = getNazivPica(porudzbina);
+		redovi[indexReda][4] = porudzbina.getVreme();
+		redovi[indexReda][5] = porudzbina.getKupac().getIme()
+				+ porudzbina.getKupac().getPrezime();
+		redovi[indexReda][6] = getDostavljac(porudzbina);
+		redovi[indexReda][7] = porudzbina.getUkupnaCena();
+		redovi[indexReda][8] = porudzbina.getAdresa();
+		redovi[indexReda][9] = porudzbina.getNapomena();
 		
 	}
 
@@ -182,7 +123,8 @@ public class ListaPorudzbinaEkran extends JDialog {
 		return porudzbina.getDostavljac().getIme() + " " + porudzbina.getDostavljac().getPrezime();
 	}
 
-	private List<Porudzbina> getPorudzbine() {
+	@Override
+	public List dajPodatke() {
 		if (administrator != null) {
 			return izvorPodataka.getPorudzbine();
 		} else if (dostavljac != null) {
@@ -212,7 +154,7 @@ public class ListaPorudzbinaEkran extends JDialog {
 				izvorPodataka.getPorudzbine().remove(porudzbina);
 				
 				JOptionPane.showMessageDialog( null, "Porudzbina obrisana!", "OK",JOptionPane.INFORMATION_MESSAGE);
-				postaviPorudzbneUTabelu();
+				popuniTabeluPodacima();
 			}
 		}
 		

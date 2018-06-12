@@ -10,3 +10,4 @@
 26|restoran 13|jelo 6|pice 9|2018-06-12 23:04:22|kupac 7|dostavljac 4||jevrejska
 28|restoran 13|jelo 5|pice 9|2018-06-12 23:52:12|kupac 7|dostavljac 4|pasulj i kola (dodao broj)|k marka 33
 30|restoran 13|jelo 6|pice 9|2018-06-13 00:08:37|kupac 7|dostavljac 4|sasws|sxaxa
+31|restoran 13|jelo 5|pice -1|2018-06-13 00:29:34|kupac 7|dostavljac -1||xxax

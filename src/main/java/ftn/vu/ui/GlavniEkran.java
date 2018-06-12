@@ -24,9 +24,12 @@ public class GlavniEkran extends JFrame {
 	private Dostavljac dostavljac = null;
 	
 	
-	JButton btnDodajDostavljaca = new JButton("Dodaj dostavljaca");
-	JButton dodajKupcaBtn = new JButton("Dodaj kupca");
+	JButton btnDodajDostavljaca = new JButton("Dostavljaci");
+	JButton dodajKupcaBtn = new JButton("Kupci");
 	JButton listaPorudzbinaBtn = new JButton("Porudzbine");
+	JButton btnRestorani = new JButton("Restorani");
+	JButton btnJela = new JButton("Jela");
+	JButton btnPice = new JButton("Pice");
 
 	public GlavniEkran(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,9 +43,12 @@ public class GlavniEkran extends JFrame {
 	}
 
 	private void sakriSveElemente() {
-		btnDodajDostavljaca.setVisible(false);
-		dodajKupcaBtn.setVisible(false);
-		listaPorudzbinaBtn.setVisible(false);
+		btnDodajDostavljaca.setEnabled(false);
+		dodajKupcaBtn.setEnabled(false);
+		listaPorudzbinaBtn.setEnabled(false);
+		btnRestorani.setEnabled(false);
+		btnJela.setEnabled(false);
+		btnPice.setEnabled(false);
 	}
 
 	private void dodajDogadjaje(final RadSaFajlom radSaFajlom, final IzvorPodataka izvorPodataka) {
@@ -61,10 +67,9 @@ public class GlavniEkran extends JFrame {
 		
 		
 		btnDodajDostavljaca.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
-				nke.dodavanjeDostavljaca();
-				nke.setVisible(true);
+			public void actionPerformed(ActionEvent e) {	
+				ListaDostavljacaEkran listaDostavljacaEkran = new ListaDostavljacaEkran(izvorPodataka);
+				listaDostavljacaEkran.setVisible(true);
 			}
 		});
 		
@@ -73,9 +78,9 @@ public class GlavniEkran extends JFrame {
 
 		dodajKupcaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NoviKorisnikEkran nke = new NoviKorisnikEkran(izvorPodataka);
-				nke.dodavanjeKupca();
-				nke.setVisible(true);
+				
+				ListaKupacaEkran listaKupacaEkran = new ListaKupacaEkran(izvorPodataka);
+				listaKupacaEkran.setVisible(true);
 				
 			}
 		});
@@ -91,7 +96,40 @@ public class GlavniEkran extends JFrame {
 			}
 		});
 		
+		btnRestorani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListaRestoranaEkran listaRestoranaEkran = new ListaRestoranaEkran(izvorPodataka);
+				listaRestoranaEkran.setVisible(true);
+			}
+		});
+		
+		btnJela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaJelaEkran listaJelaEkran = new ListaJelaEkran(izvorPodataka);
+				listaJelaEkran.setVisible(true);
+			}
+		});
+		
+		btnPice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaPicaEkran listaPicaEkran = new ListaPicaEkran(izvorPodataka);
+				listaPicaEkran.setVisible(true);
+			}
+		});
+		
 		getContentPane().add(listaPorudzbinaBtn);
+		
+		
+		btnRestorani.setBounds(10, 132, 147, 23);
+		getContentPane().add(btnRestorani);
+		
+		
+		btnJela.setBounds(10, 166, 147, 23);
+		getContentPane().add(btnJela);
+		
+		
+		btnPice.setBounds(10, 200, 147, 23);
+		getContentPane().add(btnPice);
 		
 	}
 
@@ -101,9 +139,12 @@ public class GlavniEkran extends JFrame {
 
 	public void pripremiZaAdmina() {
 		System.out.println("U metodi pripremiZaAdmina");
-		btnDodajDostavljaca.setVisible(true);
-		listaPorudzbinaBtn.setVisible(true);
-		dodajKupcaBtn.setVisible(true);
+		btnDodajDostavljaca.setEnabled(true);
+		listaPorudzbinaBtn.setEnabled(true);
+		dodajKupcaBtn.setEnabled(true);
+		btnRestorani.setEnabled(true);
+		btnJela.setEnabled(true);
+		btnPice.setEnabled(true);
 	}
 
 	public void setDostavljac(Dostavljac dostavljac) {
@@ -112,7 +153,7 @@ public class GlavniEkran extends JFrame {
 	
 	public void pripremiZaDostavljaca() {
 		System.out.println("U metodi pripremiZaDostavljaca");
-		listaPorudzbinaBtn.setVisible(true);
+		listaPorudzbinaBtn.setEnabled(true);
 	}
 
 	public void setKupac(Kupac kupac) {
@@ -121,6 +162,6 @@ public class GlavniEkran extends JFrame {
 
 	public void pripremiZaKupca() {
 		System.out.println("U metodi pripremiZaKupca");
-		listaPorudzbinaBtn.setVisible(true);
+		listaPorudzbinaBtn.setEnabled(true);
 	}
 }

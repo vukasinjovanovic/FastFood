@@ -39,6 +39,7 @@ public class NoviKorisnikEkran extends JDialog {
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		setModal(true);
 		
 		JButton btnSacuvaj = new JButton("Sacuvaj");
 		btnSacuvaj.addActionListener(new ActionListener() {
@@ -142,7 +143,6 @@ public class NoviKorisnikEkran extends JDialog {
 		tipVozilacomboBox.addItem(TipVozila.KOMBI);
 		tipVozilacomboBox.addItem(TipVozila.SKUTER);
 		getContentPane().add(tipVozilacomboBox);
-		setModal(true);
 		
 	}
 	

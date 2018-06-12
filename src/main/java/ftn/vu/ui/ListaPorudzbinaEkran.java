@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ListaPorudzbina extends JDialog {
+public class ListaPorudzbinaEkran extends JDialog {
 	private JTable tabela;
 	private IzvorPodataka izvorPodataka;
 
@@ -32,7 +32,7 @@ public class ListaPorudzbina extends JDialog {
 	private Kupac kupac = null;
 	private Dostavljac dostavljac = null;
 
-	public ListaPorudzbina(IzvorPodataka izvorPodataka)  {
+	public ListaPorudzbinaEkran(final IzvorPodataka izvorPodataka)  {
 		this.izvorPodataka = izvorPodataka;
 		this.administrator = izvorPodataka.getUlogovaniAdministrator();
 		this.kupac = izvorPodataka.getUlogovaniKupac();
@@ -46,11 +46,13 @@ public class ListaPorudzbina extends JDialog {
 		JButton dodajBtn = new JButton("Dodaj");
 		dodajBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				otvoriPorudzbinaEkran();
 			}
 		});
 		JButton izmeniBtn = new JButton("Izmeni");
 		izmeniBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				otvoriPorudzbinaEkranIzmena();
 			}
 		});
 
@@ -73,10 +75,56 @@ public class ListaPorudzbina extends JDialog {
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		postaviPorudzbneUTabelu();
+		
+		if(this.dostavljac != null) {
+			btnObrisi.setEnabled(false);
+			dodajBtn.setEnabled(false);
+		}
 
 	}
 
-	private void postaviPorudzbneUTabelu()  {
+	private void otvoriPorudzbinaEkran() {
+		PorudzbinaEkran porudzbinaEkran = new PorudzbinaEkran(izvorPodataka, this, null);
+		porudzbinaEkran.setVisible(true);
+	}
+	
+
+
+	private void otvoriPorudzbinaEkranIzmena() {
+		Porudzbina porudzbina = uzmiSelektovanuPorudzbinu();
+		
+		boolean izmena = daLiJeMogucaIzmena(porudzbina);
+		if(izmena) {
+			PorudzbinaEkran porudzbinaEkran = new PorudzbinaEkran(izvorPodataka, this, porudzbina);
+			porudzbinaEkran.setVisible(true);
+		}
+	}
+
+	private boolean daLiJeMogucaIzmena(Porudzbina porudzbina) {
+		
+		if(porudzbina == null) {
+			JOptionPane.showMessageDialog( null, "Morate selektovati porudzbinu!", "OK",JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		if(porudzbina.getDostavljac() != null) {
+			JOptionPane.showMessageDialog( null, "Dostava u toku! Nije moguce menjati porudzbinu", "OK",JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	private Porudzbina uzmiSelektovanuPorudzbinu() {
+		if(tabela.getSelectedRow() == -1) {
+			return null;
+		}
+		
+		long id = Long.parseLong(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
+		
+		Porudzbina porudzbina = izvorPodataka.nadjiPorudzbinu(id);
+		return porudzbina;
+	}
+
+	public void postaviPorudzbneUTabelu()  {
 
    
 		List<Porudzbina> porudzbine = getPorudzbine();

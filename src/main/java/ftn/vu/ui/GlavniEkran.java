@@ -86,7 +86,7 @@ public class GlavniEkran extends JFrame {
 		listaPorudzbinaBtn.setBounds(10, 97, 147, 23);
 		listaPorudzbinaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaPorudzbina porudzbine = new ListaPorudzbina(izvorPodataka);
+				ListaPorudzbinaEkran porudzbine = new ListaPorudzbinaEkran(izvorPodataka);
 				porudzbine.setVisible(true);
 			}
 		});

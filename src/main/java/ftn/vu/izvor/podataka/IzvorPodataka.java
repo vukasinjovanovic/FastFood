@@ -182,4 +182,34 @@ public class IzvorPodataka {
 		return rezultat;
 	}
 
+	public List<Jelo> pronadjiJela(Restoran restoran) {
+		List<Jelo> jela = new ArrayList<Jelo>();
+		for (Jelo jelo : getJela()) {
+			if(jelo.getRestoran().getId() == restoran.getId()) {
+				jela.add(jelo);
+			}
+		}
+		return jela;
+	}
+
+	public List<Pice> pronadjiPica(Restoran restoran) {
+		List<Pice> pica = new ArrayList<Pice>();
+		for (Pice pice : getPice()) {
+			if(pice.getRestoran().getId() == restoran.getId()) {
+				pica.add(pice);
+			}
+		}
+		return pica;
+	}
+
+	public Porudzbina nadjiPorudzbinu(long id) {
+		for (Porudzbina porudzbina : porudzbine) {
+			if(porudzbina.getId() == id) {
+				return porudzbina;
+			}
+		}
+		
+		return null;
+	}
+
 }

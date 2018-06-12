@@ -16,9 +16,13 @@ public class Porudzbina extends Identifikator {
 	private Kupac kupac;
 
 	private Dostavljac dostavljac;
+	
+	private String adresa;
+	
+	private String napomena;
 
 	public Porudzbina(long id, Restoran restoran, Jelo jelo, Pice pice, Date vreme,
-			Kupac kupac, Dostavljac dostavljac) throws Exception {
+			Kupac kupac, Dostavljac dostavljac, String adresa, String napomena) throws Exception {
 		this.id = id;
 		this.restoran = restoran;
 		this.jelo = jelo;
@@ -26,6 +30,8 @@ public class Porudzbina extends Identifikator {
 		this.vreme = vreme;
 		this.kupac = kupac;
 		this.dostavljac = dostavljac;
+		this.adresa = adresa;
+		this.napomena = napomena;
 
 		validiraj(this);
 	}
@@ -61,6 +67,11 @@ public class Porudzbina extends Identifikator {
 						"Pice mora biti iz istog restorana za koji je kreirana porudzbina!");
 			}
 		}
+		
+		if(porudzbina.adresa == null || "".equals(porudzbina.adresa)) {
+			throw new Exception(
+					"Adresa ne moze biti prazna!");
+		}
 	}
 
 	public Restoran getRestoran() {
@@ -85,6 +96,14 @@ public class Porudzbina extends Identifikator {
 
 	public Dostavljac getDostavljac() {
 		return dostavljac;
+	}
+	
+	public String getAdresa() {
+		return adresa;
+	}
+	
+	public String getNapomena() {
+		return napomena != null ? napomena : "";
 	}
 
 	public double getUkupnaCena() {
@@ -126,17 +145,20 @@ public class Porudzbina extends Identifikator {
 		return super.toString() + "|restoran " + restoran.getId() + "|jelo "
 				+ jelo.getId() + "|pice " + getPiceId() + "|" + getVremeStr()
 				+ "|kupac " + kupac.getId() + "|dostavljac "
-				+ getDostavljacId() + "";
+				+ getDostavljacId() + "|" + getNapomena() + "|" + adresa;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((adresa == null) ? 0 : adresa.hashCode());
 		result = prime * result
 				+ ((dostavljac == null) ? 0 : dostavljac.hashCode());
 		result = prime * result + ((jelo == null) ? 0 : jelo.hashCode());
 		result = prime * result + ((kupac == null) ? 0 : kupac.hashCode());
+		result = prime * result
+				+ ((napomena == null) ? 0 : napomena.hashCode());
 		result = prime * result + ((pice == null) ? 0 : pice.hashCode());
 		result = prime * result
 				+ ((restoran == null) ? 0 : restoran.hashCode());
@@ -153,6 +175,11 @@ public class Porudzbina extends Identifikator {
 		if (getClass() != obj.getClass())
 			return false;
 		Porudzbina other = (Porudzbina) obj;
+		if (adresa == null) {
+			if (other.adresa != null)
+				return false;
+		} else if (!adresa.equals(other.adresa))
+			return false;
 		if (dostavljac == null) {
 			if (other.dostavljac != null)
 				return false;
@@ -167,6 +194,11 @@ public class Porudzbina extends Identifikator {
 			if (other.kupac != null)
 				return false;
 		} else if (!kupac.equals(other.kupac))
+			return false;
+		if (napomena == null) {
+			if (other.napomena != null)
+				return false;
+		} else if (!napomena.equals(other.napomena))
 			return false;
 		if (pice == null) {
 			if (other.pice != null)
@@ -185,7 +217,4 @@ public class Porudzbina extends Identifikator {
 			return false;
 		return true;
 	}
-	
-	
-
 }

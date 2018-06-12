@@ -133,7 +133,7 @@ public class ListaPorudzbinaEkran extends JDialog {
 		if(porudzbine != null && !porudzbine.isEmpty()) {
 			
 			String[] kolone = new String[] { "ID", "Restoran", "Jelo", "Pice",
-					"Vreme", "Kupac", "Dostavljac" };
+					"Vreme", "Kupac", "Dostavljac", "Ukupna cena", "Adresa", "Napomena" };
 			
 			Object[][] redovi = new Object[porudzbine.size()][kolone.length];
 
@@ -148,7 +148,10 @@ public class ListaPorudzbinaEkran extends JDialog {
 				redovi[index][5] = porudzbina.getKupac().getIme()
 						+ porudzbina.getKupac().getPrezime();
 				redovi[index][6] = getDostavljac(porudzbina);
-
+				redovi[index][7] = porudzbina.getUkupnaCena();
+				redovi[index][8] = porudzbina.getAdresa();
+				redovi[index][9] = porudzbina.getNapomena();
+				
 				index++;
 			}
 

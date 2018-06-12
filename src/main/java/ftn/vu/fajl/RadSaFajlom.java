@@ -333,7 +333,19 @@ public class RadSaFajlom {
 		    
 		    Dostavljac dostavljac = pronadjuDostavljaca(polja[6]);
 		    
-			Porudzbina porudzbina = new Porudzbina(id, restoran, jelo, pice, vreme, kupac, dostavljac);
+		    String napomena = polja[7];
+		    
+		    String adresa = polja[8];
+		    
+			Porudzbina porudzbina = new Porudzbina(id,
+					restoran, 
+					jelo, 
+					pice, 
+					vreme, 
+					kupac, 
+					dostavljac,
+					adresa,
+					napomena);
 			
 			postaviMaxId(porudzbina.getId());
 			

@@ -21,12 +21,11 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JTextField;
 
 public class PorudzbinaEkran extends JDialog {
 
@@ -49,6 +48,8 @@ public class PorudzbinaEkran extends JDialog {
 	private JButton btnSacuvaj;
 	
 	private JButton btnOdustani;
+	private JTextField adresaTxtF;
+	private JTextField napomenaTxtF;
 
 
 	public PorudzbinaEkran(IzvorPodataka izvorPodataka,
@@ -57,7 +58,7 @@ public class PorudzbinaEkran extends JDialog {
 		this.listaPorudzbinaEkran = listaPorudzbinaEkran;
 		this.porudzbina = porudzbina;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 360);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
@@ -67,7 +68,7 @@ public class PorudzbinaEkran extends JDialog {
 				sacuvajPorudzbinu();
 			}
 		});
-		btnSacuvaj.setBounds(10, 228, 89, 23);
+		btnSacuvaj.setBounds(10, 288, 89, 23);
 		getContentPane().add(btnSacuvaj);
 
 		btnOdustani = new JButton("Odustani");
@@ -76,7 +77,7 @@ public class PorudzbinaEkran extends JDialog {
 				dispose();
 			}
 		});
-		btnOdustani.setBounds(111, 228, 89, 23);
+		btnOdustani.setBounds(120, 288, 89, 23);
 		getContentPane().add(btnOdustani);
 
 		JLabel lblRestoran = new JLabel("Restoran:");
@@ -123,6 +124,24 @@ public class PorudzbinaEkran extends JDialog {
 		dostavljacComboBox = new JComboBox();
 		dostavljacComboBox.setBounds(120, 151, 150, 20);
 		getContentPane().add(dostavljacComboBox);
+		
+		JLabel lblAdresa = new JLabel("Adresa:");
+		lblAdresa.setBounds(10, 209, 100, 14);
+		getContentPane().add(lblAdresa);
+		
+		JLabel lblNapomena = new JLabel("Napomena");
+		lblNapomena.setBounds(10, 233, 100, 14);
+		getContentPane().add(lblNapomena);
+		
+		adresaTxtF = new JTextField();
+		adresaTxtF.setBounds(123, 206, 180, 20);
+		getContentPane().add(adresaTxtF);
+		adresaTxtF.setColumns(10);
+		
+		napomenaTxtF = new JTextField();
+		napomenaTxtF.setBounds(123, 230, 180, 20);
+		getContentPane().add(napomenaTxtF);
+		napomenaTxtF.setColumns(10);
 		setModal(true);
 
 		popuniPocetnePodatke();
@@ -219,10 +238,22 @@ public class PorudzbinaEkran extends JDialog {
 					.getSelectedItem()).getDostavljac();
 		}
 		
+		String adresa = adresaTxtF.getText();
+		
+		String napomena = napomenaTxtF.getText();
+		
 		if (this.porudzbina != null) {
 			
 			try {
-				Porudzbina test = new Porudzbina(this.porudzbina.getId(), restoran, jelo, pice, new Date(), kupac, dostavljac);
+				Porudzbina test = new Porudzbina(this.porudzbina.getId(),
+						restoran, 
+						jelo, 
+						pice, 
+						new Date(), 
+						kupac, 
+						dostavljac,
+						adresa,
+						napomena);
 				
 				int index = izvorPodataka.getPorudzbine().indexOf(this.porudzbina);
 				izvorPodataka.getPorudzbine().remove(index);
@@ -243,9 +274,15 @@ public class PorudzbinaEkran extends JDialog {
 		} else {
 
 			try {
-				Porudzbina porudzbina = new Porudzbina(
-						izvorPodataka.dajSledeciId(), restoran, jelo, pice,
-						new Date(), kupac, dostavljac);
+				Porudzbina porudzbina = new Porudzbina(izvorPodataka.dajSledeciId(), 
+						restoran, 
+						jelo, 
+						pice,
+						new Date(), 
+						kupac, 
+						dostavljac,
+						adresa,
+						napomena);
 
 				izvorPodataka.getPorudzbine().add(porudzbina);
 				listaPorudzbinaEkran.postaviPorudzbneUTabelu();
@@ -297,6 +334,12 @@ public class PorudzbinaEkran extends JDialog {
 				dostavljacComboBox.setSelectedItem(new DostavljacConboItem(
 						porudzbina.getDostavljac()));
 			}
+			
+			//postavi adresu 
+			adresaTxtF.setText(porudzbina.getAdresa());
+			
+			// postavi napomenu
+			napomenaTxtF.setText(porudzbina.getNapomena());
 
 			if (izvorPodataka.getUlogovaniAdministrator() != null) {
 				restoranComboBox.setEnabled(true);
@@ -304,18 +347,24 @@ public class PorudzbinaEkran extends JDialog {
 				piceComboBox.setEnabled(true);
 				kupacComboBox.setEnabled(false);
 				dostavljacComboBox.setEnabled(true);
+				adresaTxtF.setEnabled(true);
+				napomenaTxtF.setEnabled(true);
 			} else if (izvorPodataka.getUlogovaniKupac() != null) {
 				restoranComboBox.setEnabled(true);
 				jeloComboBox.setEnabled(true);
 				piceComboBox.setEnabled(true);
 				kupacComboBox.setEnabled(false);
 				dostavljacComboBox.setEnabled(false);
+				adresaTxtF.setEnabled(true);
+				napomenaTxtF.setEnabled(true);
 			} else if (izvorPodataka.getUlogovaniDostavljac() != null) {
 				restoranComboBox.setEnabled(false);
 				jeloComboBox.setEnabled(false);
 				piceComboBox.setEnabled(false);
 				kupacComboBox.setEnabled(false);
 				dostavljacComboBox.setEnabled(true);
+				adresaTxtF.setEnabled(false);
+				napomenaTxtF.setEnabled(false);
 			}
 
 		}

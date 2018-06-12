@@ -31,7 +31,7 @@ import java.util.List;
 public class PorudzbinaEkran extends JDialog {
 
 	private IzvorPodataka izvorPodataka;
-	
+
 	private ListaPorudzbinaEkran listaPorudzbinaEkran;
 
 	private JComboBox restoranComboBox;
@@ -43,12 +43,16 @@ public class PorudzbinaEkran extends JDialog {
 	private JComboBox kupacComboBox;
 
 	private JComboBox dostavljacComboBox;
-	
-	private Porudzbina porudzbina;
-	
-	private JButton btnSacuvaj;
 
-	public PorudzbinaEkran(IzvorPodataka izvorPodataka, ListaPorudzbinaEkran listaPorudzbinaEkran, Porudzbina porudzbina) {
+	private Porudzbina porudzbina;
+
+	private JButton btnSacuvaj;
+	
+	private JButton btnOdustani;
+
+
+	public PorudzbinaEkran(IzvorPodataka izvorPodataka,
+			ListaPorudzbinaEkran listaPorudzbinaEkran, Porudzbina porudzbina) {
 		this.izvorPodataka = izvorPodataka;
 		this.listaPorudzbinaEkran = listaPorudzbinaEkran;
 		this.porudzbina = porudzbina;
@@ -66,7 +70,7 @@ public class PorudzbinaEkran extends JDialog {
 		btnSacuvaj.setBounds(10, 228, 89, 23);
 		getContentPane().add(btnSacuvaj);
 
-		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani = new JButton("Odustani");
 		btnOdustani.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -122,14 +126,14 @@ public class PorudzbinaEkran extends JDialog {
 		setModal(true);
 
 		popuniPocetnePodatke();
-		
+
 		pripremiZaIzmenu();
 	}
 
 	protected void restoranPromenjenDogadjaj() {
-		
+
 		Restoran restoran = ((RestoranComboItem) restoranComboBox
-					.getSelectedItem()).getRestoran();
+				.getSelectedItem()).getRestoran();
 
 		List<Jelo> jela = izvorPodataka.pronadjiJela(restoran);
 
@@ -146,7 +150,7 @@ public class PorudzbinaEkran extends JDialog {
 		}
 
 		piceComboBox.setSelectedIndex(-1);
-		
+
 		pripremiZaIzmenu();
 
 	}
@@ -179,6 +183,10 @@ public class PorudzbinaEkran extends JDialog {
 
 			dostavljacComboBox.addItem(new DostavljacConboItem(izvorPodataka
 					.getUlogovaniDostavljac()));
+			
+			for (Kupac kupac : izvorPodataka.getKupci()) {
+				kupacComboBox.addItem(new KupacComboItem(kupac));
+			}
 
 			// dostavljac ne bira kupca
 			kupacComboBox.setEnabled(false);
@@ -191,13 +199,15 @@ public class PorudzbinaEkran extends JDialog {
 				.getSelectedItem()).getRestoran();
 
 		Jelo jelo = null;
-		if(jeloComboBox.getSelectedIndex() != -1) {
-			jelo = ((JeloComboItem) jeloComboBox.getSelectedItem()).getJelo();
+		if (jeloComboBox.getSelectedIndex() != -1) {
+			jelo = ((JeloComboItem) jeloComboBox.getSelectedItem())
+					.getJelo();
 		}
 
 		Pice pice = null;
 		if (piceComboBox.getSelectedIndex() != -1) {
-			pice = ((PiceComboItem) piceComboBox.getSelectedItem()).getPice();
+			pice = ((PiceComboItem) piceComboBox.getSelectedItem())
+					.getPice();
 		}
 
 		Kupac kupac = ((KupacComboItem) kupacComboBox.getSelectedItem())
@@ -208,64 +218,107 @@ public class PorudzbinaEkran extends JDialog {
 			dostavljac = ((DostavljacConboItem) dostavljacComboBox
 					.getSelectedItem()).getDostavljac();
 		}
+		
+		if (this.porudzbina != null) {
+			
+			try {
+				Porudzbina test = new Porudzbina(this.porudzbina.getId(), restoran, jelo, pice, new Date(), kupac, dostavljac);
+				
+				int index = izvorPodataka.getPorudzbine().indexOf(this.porudzbina);
+				izvorPodataka.getPorudzbine().remove(index);
+				izvorPodataka.getPorudzbine().add(index , test);	
+				this.porudzbina = test;
+				
+				listaPorudzbinaEkran.postaviPorudzbneUTabelu();
+				
+				JOptionPane.showMessageDialog(null, "Porudzbina izmenjena!", "OK",
+						JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+				
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Greška",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
-		try {
-			Porudzbina porudzbina = new Porudzbina(
-					izvorPodataka.dajSledeciId(), restoran, jelo, pice,
-					new Date(), kupac, dostavljac);
+		} else {
 
+			try {
+				Porudzbina porudzbina = new Porudzbina(
+						izvorPodataka.dajSledeciId(), restoran, jelo, pice,
+						new Date(), kupac, dostavljac);
 
-			izvorPodataka.getPorudzbine().add(porudzbina);
-			listaPorudzbinaEkran.postaviPorudzbneUTabelu();
-			JOptionPane.showMessageDialog( null, "Porudzbina dodata!", "OK",JOptionPane.INFORMATION_MESSAGE);
-			dispose();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog( null, e.getMessage(), "Greška",JOptionPane.ERROR_MESSAGE);
+				izvorPodataka.getPorudzbine().add(porudzbina);
+				listaPorudzbinaEkran.postaviPorudzbneUTabelu();
+				JOptionPane.showMessageDialog(null, "Porudzbina dodata!", "OK",
+						JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Greška",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
 		}
 
 	}
-	
 
 	private void pripremiZaIzmenu() {
-		if(this.porudzbina != null) {
+		if (this.porudzbina != null) {
 			btnSacuvaj.setText("Sacuvaj izmene");
+			btnSacuvaj.setBounds(btnSacuvaj.getX(), btnSacuvaj.getY(),
+					btnSacuvaj.getWidth() + 15, btnSacuvaj.getHeight());
+			btnOdustani.setBounds(btnOdustani.getX() + 15, btnOdustani.getY(),
+					btnOdustani.getWidth(), btnOdustani.getHeight());
 			
+
 			// selektuj restoran
-			restoranComboBox.setSelectedItem(new RestoranComboItem(porudzbina.getRestoran()));
-			
+			restoranComboBox.setSelectedItem(new RestoranComboItem(porudzbina
+					.getRestoran()));
+
 			// selektuj jelo
-			jeloComboBox.setSelectedItem(new JeloComboItem(porudzbina.getJelo()));
-			
+			jeloComboBox
+					.setSelectedItem(new JeloComboItem(porudzbina.getJelo()));
+
 			// selektuj pice
-			if(porudzbina.getPice() == null) {
+			if (porudzbina.getPice() == null) {
 				piceComboBox.setSelectedIndex(-1);
 			} else {
-				piceComboBox.setSelectedItem(new PiceComboItem(porudzbina.getPice()));
+				piceComboBox.setSelectedItem(new PiceComboItem(porudzbina
+						.getPice()));
 			}
-			
-			//selektuj kupca
-			kupacComboBox.setSelectedItem(new KupacComboItem(porudzbina.getKupac()));
-			
-			//selektuj dostavljaca
-			if(porudzbina.getDostavljac() == null) {
+
+			// selektuj kupca
+			kupacComboBox.setSelectedItem(new KupacComboItem(porudzbina
+					.getKupac()));
+
+			// selektuj dostavljaca
+			if (porudzbina.getDostavljac() == null) {
 				dostavljacComboBox.setSelectedIndex(-1);
 			} else {
-				dostavljacComboBox.setSelectedItem(new DostavljacConboItem(porudzbina.getDostavljac()));
+				dostavljacComboBox.setSelectedItem(new DostavljacConboItem(
+						porudzbina.getDostavljac()));
 			}
-			
-			
-			if(izvorPodataka.getUlogovaniAdministrator() != null) {
+
+			if (izvorPodataka.getUlogovaniAdministrator() != null) {
 				restoranComboBox.setEnabled(true);
 				jeloComboBox.setEnabled(true);
 				piceComboBox.setEnabled(true);
-				kupacComboBox.setEnabled(true);
+				kupacComboBox.setEnabled(false);
 				dostavljacComboBox.setEnabled(true);
 			} else if (izvorPodataka.getUlogovaniKupac() != null) {
-				//TODO: ovde si stao
+				restoranComboBox.setEnabled(true);
+				jeloComboBox.setEnabled(true);
+				piceComboBox.setEnabled(true);
+				kupacComboBox.setEnabled(false);
+				dostavljacComboBox.setEnabled(false);
+			} else if (izvorPodataka.getUlogovaniDostavljac() != null) {
+				restoranComboBox.setEnabled(false);
+				jeloComboBox.setEnabled(false);
+				piceComboBox.setEnabled(false);
+				kupacComboBox.setEnabled(false);
+				dostavljacComboBox.setEnabled(true);
 			}
-			
+
 		}
 
-		
 	}
 }

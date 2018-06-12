@@ -129,4 +129,63 @@ public class Porudzbina extends Identifikator {
 				+ getDostavljacId() + "";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((dostavljac == null) ? 0 : dostavljac.hashCode());
+		result = prime * result + ((jelo == null) ? 0 : jelo.hashCode());
+		result = prime * result + ((kupac == null) ? 0 : kupac.hashCode());
+		result = prime * result + ((pice == null) ? 0 : pice.hashCode());
+		result = prime * result
+				+ ((restoran == null) ? 0 : restoran.hashCode());
+		result = prime * result + ((vreme == null) ? 0 : vreme.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Porudzbina other = (Porudzbina) obj;
+		if (dostavljac == null) {
+			if (other.dostavljac != null)
+				return false;
+		} else if (!dostavljac.equals(other.dostavljac))
+			return false;
+		if (jelo == null) {
+			if (other.jelo != null)
+				return false;
+		} else if (!jelo.equals(other.jelo))
+			return false;
+		if (kupac == null) {
+			if (other.kupac != null)
+				return false;
+		} else if (!kupac.equals(other.kupac))
+			return false;
+		if (pice == null) {
+			if (other.pice != null)
+				return false;
+		} else if (!pice.equals(other.pice))
+			return false;
+		if (restoran == null) {
+			if (other.restoran != null)
+				return false;
+		} else if (!restoran.equals(other.restoran))
+			return false;
+		if (vreme == null) {
+			if (other.vreme != null)
+				return false;
+		} else if (!vreme.equals(other.vreme))
+			return false;
+		return true;
+	}
+	
+	
+
 }

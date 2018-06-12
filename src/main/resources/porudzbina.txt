@@ -1,5 +1,10 @@
 10|restoran 13|jelo 5|pice 9|2018-06-09 23:02:55|kupac 7|dostavljac 3
-11|restoran 13|jelo 5|pice -1|2018-06-10 23:02:55|kupac 7|dostavljac -1
 12|restoran 13|jelo 6|pice -1|2018-06-11 23:02:55|kupac 7|dostavljac 3
-15|restoran 13|jelo 5|pice -1|2018-06-11 23:14:21|kupac 7|dostavljac -1
-18|restoran 13|jelo 5|pice -1|2018-06-11 23:23:14|kupac 7|dostavljac -1
+15|restoran 13|jelo 6|pice 9|2018-06-12 22:36:00|kupac 7|dostavljac 4
+18|restoran 13|jelo 5|pice 9|2018-06-12 22:31:28|kupac 7|dostavljac 3
+20|restoran 13|jelo 6|pice 9|2018-06-12 22:12:41|kupac 8|dostavljac 4
+21|restoran 13|jelo 5|pice -1|2018-06-12 22:16:34|kupac 7|dostavljac 3
+22|restoran 13|jelo 5|pice 9|2018-06-12 22:17:06|kupac 7|dostavljac 4
+23|restoran 13|jelo 6|pice 9|2018-06-12 22:38:08|kupac 8|dostavljac 3
+24|restoran 13|jelo 6|pice 9|2018-06-12 23:00:38|kupac 8|dostavljac 3
+26|restoran 13|jelo 6|pice 9|2018-06-12 23:04:22|kupac 7|dostavljac 4

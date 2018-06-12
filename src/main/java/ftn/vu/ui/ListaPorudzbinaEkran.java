@@ -64,6 +64,7 @@ public class ListaPorudzbinaEkran extends JDialog {
 		JButton btnObrisi = new JButton("Obrisi");
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				brisanjePorudzbine();
 			}
 		});
 		panel.add(btnObrisi);
@@ -194,6 +195,40 @@ public class ListaPorudzbinaEkran extends JDialog {
 			return porudzbina.getPice().getNaziv();
 		}
 		return "";
+	}
+	
+
+
+	private void brisanjePorudzbine() {
+		Porudzbina porudzbina = uzmiSelektovanuPorudzbinu();
+		
+		boolean brisanje = daLiJeMoguceBrisanje(porudzbina);
+		if(brisanje) {
+			int r = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Brisanje",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE); 
+			if(r == 0) {
+				izvorPodataka.getPorudzbine().remove(porudzbina);
+				
+				JOptionPane.showMessageDialog( null, "Porudzbina obrisana!", "OK",JOptionPane.INFORMATION_MESSAGE);
+				postaviPorudzbneUTabelu();
+			}
+		}
+		
+	}
+
+	private boolean daLiJeMoguceBrisanje(Porudzbina porudzbina) {
+		
+		if(porudzbina == null) {
+			JOptionPane.showMessageDialog( null, "Morate selektovati porudzbinu!", "OK",JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+				
+	    if(porudzbina.getDostavljac() != null){
+			JOptionPane.showMessageDialog(null, 
+					"Porudzbina preuzeta od strane dostavljaca! Nije moguce brisanje!", "OK",JOptionPane.INFORMATION_MESSAGE);
+			return false;
+	    }
+	    
+	    return true;
 	}
 
 }

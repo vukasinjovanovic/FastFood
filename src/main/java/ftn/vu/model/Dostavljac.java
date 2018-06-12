@@ -1,30 +1,10 @@
 package ftn.vu.model;
 
-public class Dostavljac extends Korisnik {
-	
-	private long jmbg;
-	
-	private double plata;
+public class Dostavljac extends Zaposleni {
 	
 	private TipVozila tipVozila;
 	
 	private String registarskaOznakaVozila;
-	
-	public long getJmbg() {
-		return jmbg;
-	}
-
-	public void setJmbg(long jmbg) {
-		this.jmbg = jmbg;
-	}
-
-	public double getPlata() {
-		return plata;
-	}
-
-	public void setPlata(double plata) {
-		this.plata = plata;
-	}
 
 	public TipVozila getTipVozila() {
 		return tipVozila;
@@ -45,17 +25,13 @@ public class Dostavljac extends Korisnik {
 
 	@Override
 	public String toString() {
-		return super.toString() + "|" + jmbg + "|" + plata + "|" + tipVozila + "|" + registarskaOznakaVozila + "";
+		return super.toString() + "|" + tipVozila + "|" + registarskaOznakaVozila + "";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + (int) (jmbg ^ (jmbg >>> 32));
-		long temp;
-		temp = Double.doubleToLongBits(plata);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime
 				* result
 				+ ((registarskaOznakaVozila == null) ? 0
@@ -74,11 +50,6 @@ public class Dostavljac extends Korisnik {
 		if (getClass() != obj.getClass())
 			return false;
 		Dostavljac other = (Dostavljac) obj;
-		if (jmbg != other.jmbg)
-			return false;
-		if (Double.doubleToLongBits(plata) != Double
-				.doubleToLongBits(other.plata))
-			return false;
 		if (registarskaOznakaVozila == null) {
 			if (other.registarskaOznakaVozila != null)
 				return false;
@@ -88,7 +59,6 @@ public class Dostavljac extends Korisnik {
 		if (tipVozila != other.tipVozila)
 			return false;
 		return true;
-	}	
-	
+	}
 	
 }
